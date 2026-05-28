@@ -8,338 +8,434 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --f:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;
-  --dark:#0D1B2A;--dark2:#132334;--dark3:#1A2D42;
-  --c1:#2563EB;--c1b:#EFF6FF;
-  --c2:#7C3AED;--c2b:#FAF5FF;
-  --c3:#0D9488;--c3b:#F0FDFA;
-  --c4:#EA580C;--c4b:#FFF7ED;
-  --c5:#16A34A;--c5b:#F0FDF4;
-  --c6:#E11D48;--c6b:#FFF1F2;
-  --bg:#F0F2F5;--card:#fff;--border:#E5E7EB;
-  --t1:#111827;--t2:#374151;--t3:#6B7280;--t4:#9CA3AF;
+  --dark:#0B1623;--dark2:#101D2E;--dark3:#162438;
+  --c1:#3B82F6;--c1b:#EFF6FF;
+  --c2:#8B5CF6;--c2b:#F5F3FF;
+  --c3:#10B981;--c3b:#ECFDF5;
+  --c4:#F59E0B;--c4b:#FFFBEB;
+  --c5:#06B6D4;--c5b:#ECFEFF;
+  --c6:#EF4444;--c6b:#FEF2F2;
+  --bg:#F8FAFC;--card:#fff;--border:#E2E8F0;
+  --t1:#0F172A;--t2:#334155;--t3:#64748B;--t4:#94A3B8;
+  --glow:0 0 20px rgba(59,130,246,0.15);
+  --radius:14px;
 }
-body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;height:100vh}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(59,130,246,0.3)}50%{box-shadow:0 0 20px rgba(59,130,246,0.6)}}
+@keyframes particleFloat{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) translateX(50px);opacity:0}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes toastIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(100%)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ringDraw{from{stroke-dashoffset:251}to{stroke-dashoffset:var(--offset)}}
+@keyframes viewEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* LOGIN */
-#loginScreen{position:fixed;inset:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}
-.login-dots{position:absolute;inset:0;background-image:radial-gradient(#1E3A52 1px,transparent 1px);background-size:28px 28px;opacity:.4;pointer-events:none}
-.login-card{position:relative;z-index:1;width:400px;background:var(--dark2);border-radius:20px;padding:48px 40px;border:1px solid #1E3A52;box-shadow:0 24px 64px rgba(0,0,0,.5)}
-.login-logo{text-align:center;margin-bottom:32px}
-.login-brain{width:68px;height:68px;border-radius:18px;background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%);display:inline-flex;align-items:center;justify-content:center;font-size:34px;margin-bottom:16px;box-shadow:0 8px 28px rgba(37,99,235,.4)}
-.login-title{font-size:24px;font-weight:700;color:#fff}
-.login-sub{font-size:13px;color:#64748B;margin-top:6px}
-.login-field{margin-bottom:12px}
-.login-label{font-size:11px;color:#94A3B8;font-weight:600;letter-spacing:.06em;margin-bottom:5px;display:block}
-.login-input{width:100%;padding:12px 16px;background:var(--dark3);border:1.5px solid #2D4A63;border-radius:10px;color:#fff;font-size:14px;font-family:var(--f);outline:none;transition:border-color .2s}
-.login-input:focus{border-color:var(--c1)}
-.login-btn{width:100%;padding:13px;background:var(--c1);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:var(--f);cursor:pointer;transition:all .2s;margin-top:8px}
-.login-btn:hover{background:#1D4ED8;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.4)}
-.login-hint{text-align:center;font-size:11px;color:#475569;margin-top:10px}
+#loginScreen{position:fixed;inset:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:center;transition:opacity .6s cubic-bezier(.4,0,.2,1)}
+#loginScreen.hiding{opacity:0}
+.login-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;width:3px;height:3px;background:rgba(59,130,246,0.4);border-radius:50%;animation:particleFloat linear infinite}
+.login-card{position:relative;z-index:1;width:420px;background:rgba(16,29,46,0.8);backdrop-filter:blur(20px);border-radius:24px;padding:52px 44px;border:1px solid rgba(59,130,246,0.15);box-shadow:0 32px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+.login-logo{text-align:center;margin-bottom:36px}
+.login-brain{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%);display:inline-flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:18px;box-shadow:0 12px 36px rgba(59,130,246,.4);animation:float 3s ease-in-out infinite}
+.login-title{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.login-sub{font-size:13px;color:#64748B;margin-top:8px}
+.login-slogan{height:20px;margin-top:12px;overflow:hidden}
+.login-slogan-text{font-size:12px;color:var(--c1);opacity:.8;animation:slideUp 3s infinite}
+.login-field{margin-bottom:14px}
+.login-label{font-size:11px;color:#94A3B8;font-weight:600;letter-spacing:.06em;margin-bottom:6px;display:block}
+.login-input{width:100%;padding:13px 16px;background:rgba(22,36,56,0.8);border:1.5px solid rgba(59,130,246,0.2);border-radius:11px;color:#fff;font-size:14px;font-family:var(--f);outline:none;transition:all .2s}
+.login-input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;border-radius:11px;font-size:15px;font-weight:700;font-family:var(--f);cursor:pointer;transition:all .3s;margin-top:10px;position:relative;overflow:hidden}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(59,130,246,.4)}
+.login-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .6s}
+.login-btn:hover::after{transform:translateX(100%)}
+.login-hint{text-align:center;font-size:11px;color:#475569;margin-top:12px}
+.login-kbd{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:4px;font-size:10px;color:#64748B;margin-left:4px}
 
 /* APP SHELL */
 #appScreen{display:flex;height:100vh;overflow:hidden}
 
 /* SIDEBAR */
-.sidebar{width:228px;flex-shrink:0;background:var(--dark);display:flex;flex-direction:column;overflow-y:auto}
-.sb-logo{display:flex;align-items:center;gap:10px;padding:18px 14px 14px;border-bottom:1px solid #132334}
-.sb-logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.sb-logo-text{font-size:15px;font-weight:700;color:#fff}
-.sb-logo-sub{font-size:10px;color:#475569;margin-top:1px}
-.sb-project{margin:10px 8px;padding:12px;background:var(--dark3);border-radius:10px;border:1px solid #1E3A52}
+.sidebar{width:240px;flex-shrink:0;background:rgba(11,22,35,0.95);backdrop-filter:blur(20px);display:flex;flex-direction:column;overflow-y:auto;border-right:1px solid rgba(255,255,255,.05)}
+.sb-logo{display:flex;align-items:center;gap:11px;padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sb-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 12px rgba(59,130,246,.3)}
+.sb-logo-text{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em}
+.sb-logo-sub{font-size:10px;color:#475569;margin-top:2px}
+.sb-project{margin:12px 10px;padding:13px 14px;background:rgba(22,36,56,0.6);border-radius:12px;border:1px solid rgba(59,130,246,0.1)}
 .proj-label{font-size:10px;color:#475569;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.proj-name{font-size:12px;font-weight:600;color:#E2E8F0;margin-top:4px;line-height:1.4}
-.proj-status{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:10px;color:#64748B}
-.sdot{width:6px;height:6px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
-.sb-nav{flex:1;padding:8px 0}
-.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;margin:2px 6px;border-radius:8px;cursor:pointer;color:#64748B;font-size:12px;font-weight:500;transition:all .15s;text-decoration:none}
-.nav-item:hover{background:#132334;color:#94A3B8}
-.nav-item.active{background:#132334;color:#fff}
-.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.nav-num{font-size:10px;font-weight:700;opacity:.7}
-.nav-check{margin-left:auto;font-size:11px;color:#22C55E;font-weight:700}
-.sb-sep{height:1px;background:#132334;margin:6px 14px}
-.sb-footer{padding:10px 8px 14px;border-top:1px solid #132334;display:flex;flex-direction:column;gap:8px}
-.sb-kb{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--dark3);border-radius:10px;cursor:pointer}
-.kb-icon{font-size:17px}
+.proj-name{font-size:12px;font-weight:600;color:#E2E8F0;margin-top:5px;line-height:1.5}
+.proj-status{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:10px;color:#64748B}
+.sdot{width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
+.sb-nav{flex:1;padding:10px 0}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;margin:2px 8px;border-radius:9px;cursor:pointer;color:#64748B;font-size:12px;font-weight:500;transition:all .2s;text-decoration:none;position:relative}
+.nav-item:hover{background:rgba(59,130,246,0.06);color:#94A3B8}
+.nav-item.active{background:rgba(59,130,246,0.1);color:#fff}
+.nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:18px;background:var(--c1);border-radius:0 3px 3px 0}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-num{font-size:10px;font-weight:700;opacity:.7;min-width:14px}
+.nav-check{margin-left:auto;font-size:10px;color:#22C55E;font-weight:700;background:rgba(34,197,94,0.1);padding:2px 6px;border-radius:4px}
+.sb-sep{height:1px;background:rgba(255,255,255,.04);margin:6px 16px}
+.sb-footer{padding:12px 10px 16px;border-top:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:10px}
+.sb-kb{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(22,36,56,0.6);border-radius:10px;cursor:pointer;transition:all .2s}
+.sb-kb:hover{background:rgba(22,36,56,0.9)}
+.kb-icon{font-size:18px}
 .kb-t{font-size:11px;color:#94A3B8;font-weight:500}
-.kb-m{font-size:10px;color:#475569;margin-top:1px}
-.sb-user{display:flex;align-items:center;gap:9px;padding:3px 8px}
-.user-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
-.user-n{font-size:12px;color:#94A3B8;font-weight:500}
+.kb-m{font-size:10px;color:#475569;margin-top:2px}
+.sb-team{display:flex;align-items:center;padding:6px 12px}
+.team-avatars{display:flex;margin-right:8px}
+.team-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;margin-left:-6px;border:2px solid var(--dark);flex-shrink:0}
+.team-av:first-child{margin-left:0}
+.team-info{font-size:10px;color:#475569}
+.team-info strong{color:#94A3B8}
+.sb-user{display:flex;align-items:center;gap:10px;padding:4px 10px}
+.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.user-n{font-size:12px;color:#E2E8F0;font-weight:500}
 .user-r{font-size:10px;color:#475569}
 
 /* MAIN */
-.main{flex:1;overflow-y:auto;background:var(--bg)}
-.view{display:none}
+.main{flex:1;overflow-y:auto;background:var(--bg);position:relative}
+.view{display:none;animation:viewEnter .4s ease}
 .view.active{display:block}
 
 /* VIEW HEADER */
-.vh{padding:20px 28px 16px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:10}
-.vh.dark{background:var(--dark);border-bottom:none}
-.vh-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.vh-title{font-size:19px;font-weight:700}
-.vh-sub{font-size:12px;color:var(--t3);margin-top:3px}
+.vh{padding:22px 32px 18px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.8);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
+.vh.dark{background:rgba(11,22,35,0.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05)}
+.vh-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.vh-title{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.vh-sub{font-size:12px;color:var(--t3);margin-top:4px}
 .vh.dark .vh-title{color:#fff}
 .vh.dark .vh-sub{color:#64748B}
-.vh-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);color:#fff}
-.vb{padding:24px 28px;max-width:1080px;margin:0 auto}
+.vh-badge{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(59,130,246,.1);color:var(--c1);border:1px solid rgba(59,130,246,.2)}
+.vh.dark .vh-badge{background:rgba(255,255,255,.08);color:#94A3B8;border-color:rgba(255,255,255,.1)}
+.vb{padding:28px 32px;max-width:1120px;margin:0 auto}
 
 /* SECTIONS */
-.vs{margin-bottom:24px}
-.vs-label{font-size:10px;font-weight:600;color:var(--t4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.vs{margin-bottom:28px}
+.vs-label{font-size:10px;font-weight:700;color:var(--t4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .vs-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* CARDS */
-.card{background:var(--card);border-radius:13px;border:1.5px solid var(--border);overflow:hidden}
-.card-hd{padding:14px 18px;border-bottom:1px solid #F3F4F6;display:flex;align-items:center;gap:11px}
-.card-hd-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.card-hd-title{font-size:14px;font-weight:700}
-.card-hd-sub{font-size:11px;color:var(--t3);margin-top:2px}
-.card-bd{padding:16px 18px}
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:all .2s}
+.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.04)}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;border:none;font-size:12px;font-weight:600;font-family:var(--f);cursor:pointer;transition:all .2s}
-.btn-primary{background:var(--bc,var(--c1));color:#fff}
-.btn-primary:hover{filter:brightness(.9);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.2)}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-ghost{background:#F3F4F6;color:var(--t2)}
-.btn-ghost:hover{background:#E5E7EB}
-.btn-outline{background:transparent;border:1.5px solid var(--bc,var(--c1));color:var(--bc,var(--c1))}
-.btn-lg{padding:11px 24px;font-size:14px;border-radius:10px}
-.btn-sm{padding:6px 12px;font-size:11px;border-radius:7px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;border:none;font-size:12px;font-weight:600;font-family:var(--f);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.btn-primary{background:var(--bc,var(--c1));color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{background:#F1F5F9;color:var(--t2)}
+.btn-ghost:hover{background:#E2E8F0}
+.btn-lg{padding:12px 28px;font-size:14px;border-radius:12px}
+.btn-sm{padding:6px 14px;font-size:11px;border-radius:8px}
+.btn .kbd{font-size:9px;padding:2px 5px;background:rgba(255,255,255,.2);border-radius:3px;margin-left:4px}
+
+/* TOAST */
+.toast-container{position:fixed;top:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{padding:12px 18px;border-radius:10px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:8px;animation:toastIn .3s ease;pointer-events:auto;box-shadow:0 8px 24px rgba(0,0,0,.12);backdrop-filter:blur(8px)}
+.toast.hide{animation:toastOut .3s ease forwards}
+.toast-success{background:rgba(16,185,129,0.95);color:#fff}
+.toast-info{background:rgba(59,130,246,0.95);color:#fff}
+.toast-warn{background:rgba(245,158,11,0.95);color:#fff}
+.toast-icon{font-size:14px}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,#E2E8F0 25%,#F1F5F9 50%,#E2E8F0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
 
 /* NEXT BAR */
-.next-bar{margin-top:20px;padding:16px 20px;background:var(--card);border-radius:13px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.next-bar{margin-top:20px;padding:16px 20px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .next-info{font-size:12px;color:var(--t3)}
 .next-info strong{color:var(--t1);font-weight:600}
 
-/* INPUT */
-.ifield{width:100%;padding:10px 13px;background:#fff;border:1.5px solid var(--border);border-radius:9px;font-size:13px;font-family:var(--f);color:var(--t1);outline:none;transition:border-color .2s}
-.ifield:focus{border-color:var(--c1)}
-.tfield{width:100%;padding:13px;background:#F8FAFC;border:1.5px solid var(--border);border-radius:9px;font-size:12px;font-family:var(--f);color:var(--t2);resize:vertical;outline:none;line-height:1.75;transition:border-color .2s;min-height:140px}
-.tfield:focus{border-color:var(--c1);background:#fff}
-
 /* BADGES */
-.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600}
-.b-todo{background:#F3F4F6;color:#6B7280}
-.b-doing{background:#FFF7ED;color:#EA580C}
-.b-done{background:#F0FDF4;color:#16A34A}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600}
+.b-todo{background:#F1F5F9;color:#64748B}
+.b-doing{background:#FFF7ED;color:#F59E0B}
+.b-done{background:#ECFDF5;color:#10B981}
+
+/* AI CURSOR */
+.ai-cursor{display:inline-block;width:2px;height:14px;background:var(--c1);animation:blink .8s infinite;margin-left:2px;vertical-align:middle}
 
 /* ---- DASHBOARD ---- */
-.pipeline-bar{display:flex;align-items:center;background:var(--card);border-radius:13px;padding:14px 18px;border:1.5px solid var(--border);overflow-x:auto;gap:0}
-.pb-node{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;min-width:76px;cursor:pointer}
-.pb-dot{width:30px;height:30px;border-radius:50%;border:2px solid #E5E7EB;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--t4);background:#fff;transition:all .2s}
-.pb-node.active .pb-dot{border-color:var(--c);background:var(--c);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.pb-node.done .pb-dot{border-color:#22C55E;background:#22C55E;color:#fff}
+.pipeline-bar{display:flex;align-items:center;background:var(--card);border-radius:var(--radius);padding:16px 20px;border:1px solid var(--border);overflow-x:auto;gap:0}
+.pb-node{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;min-width:80px;cursor:pointer;transition:all .2s}
+.pb-node:hover{transform:translateY(-2px)}
+.pb-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--t4);background:#fff;transition:all .3s}
+.pb-node.active .pb-dot{border-color:var(--c);background:var(--c);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.pb-node.done .pb-dot{border-color:#10B981;background:#10B981;color:#fff}
 .pb-name{font-size:10px;color:var(--t4);font-weight:500;white-space:nowrap}
 .pb-node.active .pb-name{color:var(--t1);font-weight:700}
-.pb-node.done .pb-name{color:#16A34A}
-.pb-line{flex:1;height:2px;background:#E5E7EB;min-width:12px}
-.pb-line.done{background:#22C55E}
+.pb-node.done .pb-name{color:#10B981}
+.pb-line{flex:1;height:2px;background:#E2E8F0;min-width:14px;transition:background .3s}
+.pb-line.done{background:#10B981}
 
-.mods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.mc{background:var(--card);border-radius:13px;border:1.5px solid var(--border);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.mc:hover{border-color:var(--c);box-shadow:0 5px 18px rgba(0,0,0,.08);transform:translateY(-2px)}
-.mc-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
-.mc-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
-.mc-icon{width:38px;height:38px;border-radius:10px;background:var(--c);display:flex;align-items:center;justify-content:center;font-size:18px}
-.mc-num{font-size:26px;font-weight:800;color:var(--border)}
-.mc-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:5px}
+.mods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mc{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:18px 20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.mc:hover{border-color:var(--c);box-shadow:0 8px 24px rgba(0,0,0,.06);transform:translateY(-3px)}
+.mc-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--c);opacity:.8}
+.mc-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.mc-icon{width:40px;height:40px;border-radius:11px;background:var(--c);display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.mc-num{font-size:28px;font-weight:800;color:#F1F5F9}
+.mc-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:6px}
 .mc-desc{font-size:11px;color:var(--t3);line-height:1.6}
-.mc-footer{margin-top:12px;display:flex;align-items:center;justify-content:space-between}
-.mc-enter{font-size:11px;font-weight:700;color:var(--c);background:transparent;border:none;cursor:pointer;font-family:var(--f);padding:0}
+.mc-footer{margin-top:14px;display:flex;align-items:center;justify-content:space-between}
+.mc-enter{font-size:11px;font-weight:700;color:var(--c);background:transparent;border:none;cursor:pointer;font-family:var(--f);padding:0;transition:all .2s}
+.mc-enter:hover{transform:translateX(3px)}
 
-.found-panel{background:var(--dark);border-radius:13px;padding:20px 24px;color:#fff}
-.fp-title{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.fp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.fp-stat{background:#132334;border-radius:9px;padding:12px 14px}
-.fp-num{font-size:24px;font-weight:800;color:#7DD3FC}
-.fp-label{font-size:10px;color:#64748B;margin-top:3px}
+.found-panel{background:var(--dark);border-radius:var(--radius);padding:22px 26px;color:#fff;position:relative;overflow:hidden}
+.found-panel::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,.15),transparent 70%);pointer-events:none}
+.fp-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.fp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fp-stat{background:rgba(22,36,56,0.8);border-radius:11px;padding:14px 16px;border:1px solid rgba(59,130,246,0.08)}
+.fp-num{font-size:28px;font-weight:800;color:#7DD3FC;font-variant-numeric:tabular-nums}
+.fp-label{font-size:10px;color:#64748B;margin-top:4px;line-height:1.5}
 
 /* ---- MODULE 1: BRIEF ---- */
-.brief-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.upload-area{border:2px dashed var(--border);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
-.upload-area:hover{border-color:var(--c1);background:var(--c1b)}
-.up-icon{font-size:28px;margin-bottom:7px}
-.up-txt{font-size:12px;color:var(--t3)}
-.up-hint{font-size:10px;color:var(--t4);margin-top:3px}
-.parse-steps{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.ps-item{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:9px;background:#F8FAFC;font-size:12px;color:var(--t3);opacity:.4;transition:all .4s}
-.ps-item.active{background:var(--c1b);color:var(--c1);opacity:1}
-.ps-item.done{background:#F0FDF4;color:#166534;opacity:1}
-.ps-dot{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.brief-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.upload-area{border:2px dashed var(--border);border-radius:var(--radius);padding:24px;text-align:center;cursor:pointer;transition:all .3s;background:#FAFBFC}
+.upload-area:hover{border-color:var(--c1);background:var(--c1b);transform:translateY(-2px)}
+.up-icon{font-size:32px;margin-bottom:8px}
+.up-txt{font-size:13px;color:var(--t3);font-weight:500}
+.up-hint{font-size:10px;color:var(--t4);margin-top:4px}
+.parse-steps{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.ps-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:#F8FAFC;font-size:12px;color:var(--t4);opacity:.4;transition:all .4s}
+.ps-item.active{background:var(--c1b);color:var(--c1);opacity:1;font-weight:500}
+.ps-item.done{background:#ECFDF5;color:#059669;opacity:1}
+.ps-dot{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;transition:all .3s}
+.ps-item.active .ps-dot{animation:glow 1.5s infinite}
 .ps-item.done .ps-dot{background:currentColor;color:#fff}
-.brief-result{display:none;flex-direction:column;gap:10px;animation:fadeUp .4s ease}
-.br-field{padding:10px 13px;background:#F8FAFC;border-radius:9px;border-left:3px solid var(--c1)}
+.brief-result{display:none;flex-direction:column;gap:10px;animation:fadeUp .5s ease}
+.br-field{padding:12px 15px;background:#F8FAFC;border-radius:10px;border-left:3px solid var(--c1);transition:all .3s}
+.br-field:hover{transform:translateX(3px)}
 .br-field.warn{border-left-color:#F59E0B;background:#FFFBEB}
 .br-field.risk{border-left-color:var(--c6);background:var(--c6b)}
-.br-fl{font-size:10px;font-weight:600;color:var(--t4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
-.br-fv{font-size:12px;color:var(--t2);line-height:1.6}
-.qa-box{background:#FFFBEB;border-radius:11px;border:1px solid #FDE68A;padding:14px 16px}
-.qa-title{font-size:11px;font-weight:700;color:#D97706;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.qa-list{display:flex;flex-direction:column;gap:7px}
-.qa-item{display:flex;gap:9px;font-size:11px;color:#92400E;line-height:1.5}
+.br-fl{font-size:10px;font-weight:700;color:var(--t4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.br-fv{font-size:12px;color:var(--t2);line-height:1.7}
+.qa-box{background:#FFFBEB;border-radius:12px;border:1px solid #FDE68A;padding:16px 18px}
+.qa-title{font-size:11px;font-weight:700;color:#D97706;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.qa-list{display:flex;flex-direction:column;gap:8px}
+.qa-item{display:flex;gap:9px;font-size:11px;color:#92400E;line-height:1.6}
 .qa-n{font-weight:700;color:#D97706;flex-shrink:0}
 
 /* ---- MODULE 2: FRAMEWORK ---- */
-.type-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.tb{padding:12px 10px;background:var(--card);border:2px solid var(--border);border-radius:11px;cursor:pointer;text-align:center;transition:all .2s;font-family:var(--f)}
-.tb:hover{transform:translateY(-2px)}
-.tb.active{border-color:var(--tc);background:var(--tbb)}
-.tb .ti{font-size:22px;margin-bottom:5px}
+.type-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.tb{padding:14px 12px;background:var(--card);border:2px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all .3s;font-family:var(--f)}
+.tb:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.tb.active{border-color:var(--tc);background:var(--tbb);transform:translateY(-3px)}
+.tb .ti{font-size:24px;margin-bottom:6px}
 .tb .tn{font-size:13px;font-weight:700;color:var(--t1)}
-.tb .ts{font-size:10px;color:var(--t4);margin-top:1px}
+.tb .ts{font-size:10px;color:var(--t4);margin-top:2px}
 .tb.active .tn{color:var(--tc)}
-.fw-layout{display:grid;grid-template-columns:1fr 240px;gap:16px}
-.fw-skel{display:flex;flex-direction:column;gap:9px}
-.fs-step{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--card);border-radius:11px;border:1.5px solid var(--border);opacity:0;transform:translateY(10px);transition:all .35s}
+.fw-layout{display:grid;grid-template-columns:1fr 260px;gap:18px}
+.fw-skel{display:flex;flex-direction:column;gap:10px}
+.fs-step{display:flex;align-items:flex-start;gap:13px;padding:13px 16px;background:var(--card);border-radius:12px;border:1px solid var(--border);opacity:0;transform:translateY(12px);transition:all .4s cubic-bezier(.4,0,.2,1)}
 .fs-step.vis{opacity:1;transform:translateY(0)}
-.fs-num{width:26px;height:26px;border-radius:7px;background:var(--c2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.fs-title{font-size:12px;font-weight:700;margin-bottom:2px}
+.fs-num{width:28px;height:28px;border-radius:8px;background:var(--c2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.fs-title{font-size:12px;font-weight:700;margin-bottom:3px}
 .fs-desc{font-size:11px;color:var(--t3);line-height:1.5}
-.fs-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-.fs-tag{font-size:10px;padding:2px 7px;border-radius:5px;background:#F3F4F6;color:var(--t3);font-weight:500}
-.nug-panel{background:var(--card);border-radius:11px;border:1.5px solid var(--border);overflow:hidden}
-.np-title{font-size:11px;font-weight:700;color:var(--t3);padding:10px 13px;border-bottom:1px solid var(--border);background:#FAFAFA}
-.np-items{padding:10px;display:flex;flex-direction:column;gap:7px}
-.nc{padding:9px 11px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;background:#fff}
-.nc:hover{border-color:var(--c2);background:var(--c2b)}
-.nc.added{border-color:#22C55E;background:#F0FDF4}
-.nc-score{float:right;font-size:10px;font-weight:700;color:#D97706;background:#FFF7ED;padding:1px 6px;border-radius:4px}
-.nc-text{font-size:11px;color:var(--t2);line-height:1.45}
-.nc-src{font-size:10px;color:var(--t4);margin-top:3px}
+.fs-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.fs-tag{font-size:10px;padding:2px 8px;border-radius:5px;background:#F1F5F9;color:var(--t3);font-weight:500}
+.nug-panel{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.np-title{font-size:11px;font-weight:700;color:var(--t3);padding:11px 14px;border-bottom:1px solid var(--border);background:#FAFBFC}
+.np-items{padding:10px;display:flex;flex-direction:column;gap:8px}
+.nc{padding:10px 12px;border-radius:9px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;background:#fff}
+.nc:hover{border-color:var(--c2);background:var(--c2b);transform:translateX(3px)}
+.nc.added{border-color:#10B981;background:#ECFDF5}
+.nc-score{float:right;font-size:10px;font-weight:700;color:#D97706;background:#FFF7ED;padding:2px 7px;border-radius:5px}
+.nc-text{font-size:11px;color:var(--t2);line-height:1.5}
+.nc-src{font-size:10px;color:var(--t4);margin-top:4px}
 
 /* ---- MODULE 3: INSIGHTS ---- */
-.iq-bar{display:flex;gap:10px;margin-bottom:18px}
+.iq-bar{display:flex;gap:10px;margin-bottom:20px}
 .iq-bar input{flex:1}
-.ds-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}
-.ds-card{background:var(--card);border-radius:11px;border:1.5px solid var(--border);padding:13px 10px;text-align:center;transition:all .3s}
+.ifield{width:100%;padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:var(--f);color:var(--t1);outline:none;transition:all .2s}
+.ifield:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.tfield{width:100%;padding:14px;background:#FAFBFC;border:1.5px solid var(--border);border-radius:10px;font-size:12px;font-family:var(--f);color:var(--t2);resize:vertical;outline:none;line-height:1.8;transition:all .2s;min-height:140px}
+.tfield:focus{border-color:var(--c1);background:#fff;box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.ds-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.ds-card{background:var(--card);border-radius:12px;border:1.5px solid var(--border);padding:14px 12px;text-align:center;transition:all .4s}
 .ds-card.loading{border-color:#F59E0B;background:#FFFBEB;animation:pulse 1.2s infinite}
-.ds-card.done{border-color:#22C55E;background:#F0FDF4;animation:none}
-.ds-icon{font-size:20px;margin-bottom:5px}
+.ds-card.done{border-color:#10B981;background:#ECFDF5;animation:none}
+.ds-icon{font-size:22px;margin-bottom:6px}
 .ds-name{font-size:11px;font-weight:600;color:var(--t2)}
-.ds-status{font-size:10px;margin-top:3px;color:var(--t4)}
+.ds-status{font-size:10px;margin-top:4px;color:var(--t4)}
 .ds-card.loading .ds-status{color:#D97706}
-.ds-card.done .ds-status{color:#16A34A}
-.ig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
-.ic{background:var(--card);border-radius:12px;border:1.5px solid var(--border);padding:15px 17px;opacity:0;transform:translateY(8px);transition:all .4s}
+.ds-card.done .ds-status{color:#10B981}
+.ig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ic{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;opacity:0;transform:translateY(10px);transition:all .5s cubic-bezier(.4,0,.2,1)}
 .ic.vis{opacity:1;transform:translateY(0)}
-.ic-src{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.ic-sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ic-src{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.ic-sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .ic-sname{font-size:10px;font-weight:700;color:var(--t3)}
-.ic-hl{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:5px}
-.ic-data{font-size:11px;color:var(--t3);line-height:1.7}
+.ic-hl{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:6px;line-height:1.4}
+.ic-data{font-size:11px;color:var(--t3);line-height:1.8}
 .ic-data strong{color:var(--t1);font-weight:600}
-.ic-act{margin-top:9px;font-size:11px;color:var(--c3);cursor:pointer;font-weight:600}
+.ic-act{margin-top:10px;font-size:11px;color:var(--c3);cursor:pointer;font-weight:600;transition:all .2s}
+.ic-act:hover{transform:translateX(4px)}
+/* Chart */
+.ic-chart{margin-top:10px;display:flex;align-items:center;gap:12px}
+.ring-chart{width:52px;height:52px;flex-shrink:0}
+.ring-chart circle{fill:none;stroke-width:6;stroke-linecap:round}
+.ring-bg{stroke:#E2E8F0}
+.ring-fg{stroke:var(--rc,var(--c3));stroke-dasharray:251;stroke-dashoffset:var(--offset,251);animation:ringDraw 1.2s ease forwards;transform:rotate(-90deg);transform-origin:center}
+.chart-legend{display:flex;flex-direction:column;gap:3px;font-size:10px;color:var(--t3)}
+.chart-legend strong{color:var(--t1);font-size:12px}
 
 /* ---- MODULE 4: STRATEGY ---- */
-.st-layout{display:grid;grid-template-columns:220px 1fr;gap:16px}
-.lib{background:var(--card);border-radius:13px;border:1.5px solid var(--border);overflow:hidden}
-.lib-search{padding:10px 13px;border-bottom:1px solid var(--border)}
-.lib-cats{display:flex;gap:4px;flex-wrap:wrap;padding:9px 13px;border-bottom:1px solid var(--border)}
-.lc-btn{padding:4px 9px;border-radius:6px;font-size:10px;font-weight:600;border:none;cursor:pointer;background:#F3F4F6;color:var(--t3);transition:all .15s;font-family:var(--f)}
+.st-layout{display:grid;grid-template-columns:230px 1fr;gap:18px}
+.lib{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.lib-search{padding:11px 14px;border-bottom:1px solid var(--border)}
+.lib-cats{display:flex;gap:4px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--border)}
+.lc-btn{padding:5px 10px;border-radius:7px;font-size:10px;font-weight:600;border:none;cursor:pointer;background:#F1F5F9;color:var(--t3);transition:all .2s;font-family:var(--f)}
+.lc-btn:hover{background:#E2E8F0}
 .lc-btn.act{background:var(--dark);color:#fff}
-.lib-items{padding:8px 9px;display:flex;flex-direction:column;gap:5px;max-height:480px;overflow-y:auto}
-.li{padding:8px 9px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;background:#fff}
-.li:hover{border-color:var(--c4);background:var(--c4b)}
-.li.added{border-color:#22C55E;background:#F0FDF4;opacity:.7}
-.li-text{font-size:11px;color:var(--t2);line-height:1.4}
-.li-cat{font-size:10px;color:var(--t4);margin-top:2px}
-.st-canvas{background:var(--card);border-radius:13px;border:1.5px solid var(--border);overflow:hidden}
-.sc-top{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.sc-top-title{font-size:13px;font-weight:700}
-.dir-cards{display:flex;gap:11px;padding:14px 18px;border-bottom:1px solid var(--border);display:none}
-.dir-cards.vis{display:flex;animation:fadeUp .4s ease}
-.dc{flex:1;padding:12px 14px;border-radius:11px;border:2px solid var(--border);cursor:pointer;transition:all .2s;background:#fff}
-.dc:hover{border-color:var(--c4);background:var(--c4b)}
-.dc.active{border-color:var(--c4);background:var(--c4b)}
-.dc-title{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
-.dc-desc{font-size:10px;color:var(--t3);line-height:1.5}
-.dc-tag{font-size:10px;padding:2px 7px;border-radius:4px;margin-top:5px;display:inline-block;background:var(--c4b);color:var(--c4);font-weight:600}
-.st-editor{padding:14px 18px;min-height:240px}
-.se-sec{margin-bottom:12px}
-.se-title{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
-.se-content{font-size:12px;color:var(--t2);line-height:1.75;padding:10px 12px;background:#F8FAFC;border-radius:8px}
-.added-nug{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:6px;background:var(--c4b);border:1px solid #FDE68A;font-size:10px;color:#92400E;margin:2px;cursor:pointer}
-.added-nug:hover{background:#FEF3C7}
+.lib-items{padding:8px 10px;display:flex;flex-direction:column;gap:6px;max-height:480px;overflow-y:auto}
+.li{padding:9px 10px;border-radius:9px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;background:#fff}
+.li:hover{border-color:var(--c4);background:var(--c4b);transform:translateX(3px)}
+.li.added{border-color:#10B981;background:#ECFDF5;opacity:.7}
+.li-text{font-size:11px;color:var(--t2);line-height:1.5}
+.li-cat{font-size:10px;color:var(--t4);margin-top:3px}
+.st-canvas{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.sc-top{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sc-top-title{font-size:14px;font-weight:700}
+.dir-cards{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);display:none}
+.dir-cards.vis{display:flex;animation:fadeUp .5s ease}
+.dc{flex:1;padding:14px 16px;border-radius:12px;border:2px solid var(--border);cursor:pointer;transition:all .3s;background:#fff}
+.dc:hover{border-color:var(--c4);background:var(--c4b);transform:translateY(-2px)}
+.dc.active{border-color:var(--c4);background:var(--c4b);box-shadow:0 4px 12px rgba(245,158,11,.15)}
+.dc-title{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.dc-desc{font-size:10px;color:var(--t3);line-height:1.6}
+.dc-tag{font-size:10px;padding:3px 8px;border-radius:5px;margin-top:6px;display:inline-block;background:var(--c4b);color:var(--c4);font-weight:600}
+.st-editor{padding:16px 20px;min-height:240px}
+.se-sec{margin-bottom:14px}
+.se-title{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.se-content{font-size:12px;color:var(--t2);line-height:1.8;padding:12px 14px;background:#F8FAFC;border-radius:9px}
 
 /* ---- MODULE 5: CREATIVE ---- */
-.camp-info{background:var(--dark);color:#fff;border-radius:13px;padding:18px 22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
-.ci-title{font-size:17px;font-weight:700;margin-bottom:6px}
+.camp-info{background:linear-gradient(135deg,var(--dark) 0%,#1A2D42 100%);color:#fff;border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+.camp-info::before{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(6,182,212,.15),transparent 70%);pointer-events:none}
+.ci-title{font-size:17px;font-weight:700;margin-bottom:8px}
 .ci-tags{display:flex;gap:8px;flex-wrap:wrap}
-.ci-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:#132334;color:#94A3B8}
-.tl-chart{background:var(--card);border-radius:13px;border:1.5px solid var(--border);padding:18px;margin-bottom:18px}
-.tl-title{font-size:12px;font-weight:700;margin-bottom:13px;color:var(--t2)}
-.tl-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.tl-label{font-size:11px;color:var(--t3);width:55px;flex-shrink:0}
-.tl-wrap{flex:1;background:#F3F4F6;border-radius:6px;height:22px;overflow:hidden}
-.tl-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:#fff;font-weight:600;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-.tl-sublabel{font-size:10px;color:var(--t4);width:80px}
-.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.cc{background:var(--card);border-radius:13px;border:2px solid var(--border);padding:16px;cursor:pointer;transition:all .2s;opacity:0;transform:translateY(10px)}
+.ci-tag{font-size:11px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,.08);color:#94A3B8;border:1px solid rgba(255,255,255,.06)}
+.tl-chart{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:20px;margin-bottom:20px}
+.tl-title{font-size:13px;font-weight:700;margin-bottom:14px;color:var(--t2)}
+.tl-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.tl-label{font-size:11px;color:var(--t3);width:50px;flex-shrink:0;font-weight:600}
+.tl-wrap{flex:1;background:#F1F5F9;border-radius:7px;height:26px;overflow:hidden}
+.tl-bar{height:100%;border-radius:7px;display:flex;align-items:center;padding:0 12px;font-size:10px;color:#fff;font-weight:600;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.tl-sublabel{font-size:10px;color:var(--t4);width:90px;flex-shrink:0}
+.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cc{background:var(--card);border-radius:var(--radius);border:2px solid var(--border);padding:18px;cursor:pointer;transition:all .3s;opacity:0;transform:translateY(12px)}
 .cc.vis{opacity:1;transform:translateY(0)}
-.cc:hover{border-color:var(--c5);box-shadow:0 5px 18px rgba(0,0,0,.08)}
-.cc.sel{border-color:var(--c5);background:var(--c5b)}
-.cc-icon{font-size:26px;margin-bottom:8px}
-.cc-title{font-size:13px;font-weight:700;margin-bottom:5px}
-.cc-desc{font-size:11px;color:var(--t3);line-height:1.6}
-.cc-sel-btn{margin-top:10px;font-size:11px;font-weight:700;color:var(--c5);background:transparent;border:none;cursor:pointer;font-family:var(--f);padding:0}
-.cc.sel .cc-sel-btn{color:#16A34A}
+.cc:hover{border-color:var(--c5);box-shadow:0 8px 24px rgba(0,0,0,.06);transform:translateY(-3px)}
+.cc.sel{border-color:var(--c5);background:var(--c5b);box-shadow:0 4px 12px rgba(6,182,212,.15)}
+.cc-icon{font-size:28px;margin-bottom:10px}
+.cc-title{font-size:13px;font-weight:700;margin-bottom:6px}
+.cc-desc{font-size:11px;color:var(--t3);line-height:1.7}
+.cc-sel-btn{margin-top:12px;font-size:11px;font-weight:700;color:var(--c5);background:transparent;border:none;cursor:pointer;font-family:var(--f);padding:0;transition:all .2s}
+.cc.sel .cc-sel-btn{color:#10B981}
 
 /* ---- MODULE 6: OUTPUT ---- */
-.out-layout{display:grid;grid-template-columns:1fr 320px;gap:16px}
-.out-preview{background:var(--card);border-radius:13px;border:1.5px solid var(--border);overflow:hidden}
-.op-hd{padding:12px 16px;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:space-between}
+.out-layout{display:grid;grid-template-columns:1fr 340px;gap:18px}
+.out-preview{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.op-hd{padding:14px 18px;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:space-between}
 .op-hd-title{font-size:13px;font-weight:700}
-.op-bd{padding:16px}
-.op-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #F9FAFB;align-items:flex-start}
+.op-bd{padding:18px}
+.op-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #F8FAFC;align-items:flex-start}
 .op-row:last-child{border-bottom:none}
-.op-key{font-size:11px;color:var(--t4);width:70px;flex-shrink:0;padding-top:1px}
-.op-val{font-size:11px;color:var(--t2);flex:1;line-height:1.6}
-.out-actions{display:flex;flex-direction:column;gap:11px}
-.ac{background:var(--card);border-radius:13px;border:1.5px solid var(--border);padding:14px 16px}
-.ac-hd{display:flex;align-items:center;gap:9px;margin-bottom:10px}
-.ac-icon{font-size:20px}
+.op-key{font-size:11px;color:var(--t4);width:72px;flex-shrink:0;padding-top:1px;font-weight:500}
+.op-val{font-size:11px;color:var(--t2);flex:1;line-height:1.7}
+.out-actions{display:flex;flex-direction:column;gap:12px}
+.ac{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;transition:all .2s}
+.ac:hover{box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.ac-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ac-icon{font-size:22px}
 .ac-title{font-size:13px;font-weight:700}
-.ac-desc{font-size:10px;color:var(--t3);margin-top:1px}
-.ac-prog{height:4px;background:#F3F4F6;border-radius:2px;overflow:hidden;margin:8px 0;display:none}
-.ac-prog-bar{height:100%;background:var(--ac,#2563EB);border-radius:2px;width:0;transition:width 1.8s ease}
+.ac-desc{font-size:10px;color:var(--t3);margin-top:2px}
+.ac-prog{height:4px;background:#F1F5F9;border-radius:3px;overflow:hidden;margin:8px 0;display:none}
+.ac-prog-bar{height:100%;background:var(--ac,var(--c1));border-radius:3px;width:0;transition:width 2s ease}
 .ac-result{display:none;font-size:11px;color:var(--t3)}
-.ac-result.vis{display:block;animation:fadeIn .3s ease}
-.ac-result-text{font-size:12px;color:var(--t2);line-height:1.8;padding:11px;background:#F8FAFC;border-radius:8px;margin-top:7px}
-.out-hist{background:var(--card);border-radius:13px;border:1.5px solid var(--border);padding:13px 15px}
-.oh-title{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:9px}
-.oh-item{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #F9FAFB;font-size:11px}
+.ac-result.vis{display:block;animation:fadeUp .4s ease}
+.ac-result-text{font-size:12px;color:var(--t2);line-height:1.8;padding:12px 14px;background:#F8FAFC;border-radius:9px;margin-top:8px}
+.out-hist{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:14px 16px}
+.oh-title{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:10px}
+.oh-item{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid #F8FAFC;font-size:11px}
 .oh-item:last-child{border-bottom:none}
-.oh-time{color:var(--t4);flex-shrink:0}
+.oh-time{color:var(--t4);flex-shrink:0;font-variant-numeric:tabular-nums}
 .oh-text{color:var(--t3)}
+
+/* ---- AI CHAT PANEL ---- */
+.ai-panel-toggle{position:fixed;bottom:24px;right:24px;z-index:100;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(59,130,246,.4);transition:all .3s}
+.ai-panel-toggle:hover{transform:scale(1.1)}
+.ai-panel-toggle.open{border-radius:14px;width:48px;height:48px;font-size:18px}
+.ai-panel{position:fixed;bottom:88px;right:24px;z-index:100;width:380px;max-height:500px;background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:0 16px 48px rgba(0,0,0,.12);display:none;flex-direction:column;overflow:hidden;animation:fadeUp .3s ease}
+.ai-panel.open{display:flex}
+.aip-header{padding:14px 18px;background:var(--dark);color:#fff;display:flex;align-items:center;gap:10px}
+.aip-avatar{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:16px}
+.aip-title{font-size:13px;font-weight:700}
+.aip-sub{font-size:10px;color:#64748B;margin-top:2px}
+.aip-status{margin-left:auto;font-size:10px;color:#22C55E;display:flex;align-items:center;gap:4px}
+.aip-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#22C55E}
+.aip-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;max-height:320px}
+.aip-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.7;animation:slideUp .3s ease}
+.aip-msg.ai{background:#F1F5F9;color:var(--t2);align-self:flex-start;border-bottom-left-radius:4px}
+.aip-msg.user{background:var(--c1);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.aip-msg .thinking{color:var(--t4);font-style:italic;display:flex;align-items:center;gap:6px}
+.aip-msg .thinking::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--c1);animation:pulse 1s infinite}
+.aip-input{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px}
+.aip-input input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:12px;font-family:var(--f);outline:none}
+.aip-input input:focus{border-color:var(--c1)}
+.aip-input button{padding:9px 14px;border-radius:9px;background:var(--c1);color:#fff;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--f)}
+
+/* AI THINKING */
+.ai-thinking{display:flex;flex-direction:column;gap:6px;padding:12px 14px;background:#F8FAFC;border-radius:10px;border:1px solid var(--border);margin:8px 0}
+.ait-step{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t4);transition:all .3s}
+.ait-step.active{color:var(--c1);font-weight:500}
+.ait-step.done{color:#10B981}
+.ait-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.ait-step.active .ait-dot{animation:pulse .8s infinite}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+
+/* RESPONSIVE */
+@media(max-width:1200px){.mods-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
 <!-- ===== LOGIN ===== -->
 <div id="loginScreen">
-  <div class="login-dots"></div>
+  <div class="login-particles" id="particles"></div>
   <div class="login-card">
     <div class="login-logo">
       <div class="login-brain">🧠</div>
       <div class="login-title">品牌大脑</div>
       <div class="login-sub">蓝标汽车事业群 · AI竞标作战系统</div>
+      <div class="login-slogan"><div class="login-slogan-text" id="sloganText">从 Brief 到 PPT，AI 帮你搞定全链路</div></div>
     </div>
-    <div class="login-field"><label class="login-label">账号</label><input class="login-input" type="text" value="demo@bluefocus.com"></div>
+    <div class="login-field"><label class="login-label">账号</label><input class="login-input" type="text" value="huosong@bluefocus.com"></div>
     <div class="login-field"><label class="login-label">密码</label><input class="login-input" type="password" value="brand2026"></div>
     <button class="login-btn" onclick="doLogin()">进入系统</button>
-    <div class="login-hint">Demo 演示账号，点击直接进入</div>
+    <div class="login-hint">Demo 演示账号，点击直接进入 <span class="login-kbd">⏎ Enter</span></div>
   </div>
 </div>
 
@@ -355,10 +451,10 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
     <div class="sb-project">
       <div class="proj-label">当前项目</div>
       <div class="proj-name">奕派M8 × 赵丽颖<br>代言人传播方案</div>
-      <div class="proj-status"><span class="sdot"></span>进行中</div>
+      <div class="proj-status"><span class="sdot"></span>进行中 · Social传播</div>
     </div>
     <nav class="sb-nav">
-      <div class="nav-item active" data-view="dashboard" onclick="nav('dashboard',this)"><span style="font-size:14px">⬛</span><span>工作台</span></div>
+      <div class="nav-item active" data-view="dashboard" onclick="nav('dashboard',this)"><span style="font-size:14px">◻️</span><span>工作台</span></div>
       <div class="sb-sep"></div>
       <div class="nav-item" data-view="brief" onclick="nav('brief',this)"><span class="nav-dot" style="background:var(--c1)"></span><span class="nav-num">01</span><span>Brief 解读台</span><span class="nav-check" id="ck1" style="display:none">✓</span></div>
       <div class="nav-item" data-view="framework" onclick="nav('framework',this)"><span class="nav-dot" style="background:var(--c2)"></span><span class="nav-num">02</span><span>框架生成台</span><span class="nav-check" id="ck2" style="display:none">✓</span></div>
@@ -369,7 +465,15 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
     </nav>
     <div class="sb-footer">
       <div class="sb-kb"><div class="kb-icon">📚</div><div><div class="kb-t">知识库基座</div><div class="kb-m">30份方案 · 206金块</div></div></div>
-      <div class="sb-user"><div class="user-av">V</div><div><div class="user-n">Vincent</div><div class="user-r">策略总监</div></div></div>
+      <div class="sb-team">
+        <div class="team-avatars">
+          <div class="team-av" style="background:linear-gradient(135deg,#3B82F6,#8B5CF6)">霍</div>
+          <div class="team-av" style="background:linear-gradient(135deg,#10B981,#06B6D4)">李</div>
+          <div class="team-av" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">张</div>
+        </div>
+        <div class="team-info"><strong>3人</strong> 在线协作</div>
+      </div>
+      <div class="sb-user"><div class="user-av">霍</div><div><div class="user-n">霍松</div><div class="user-r">策略总监</div></div></div>
     </div>
   </aside>
 
@@ -389,7 +493,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
           <div class="vs-label">AI 作战链路进度</div>
           <div class="pipeline-bar">
             <div class="pb-node done" style="--c:#64748B"><div class="pb-dot">✓</div><div class="pb-name">数据基座</div></div>
-            <div class="pb-line" id="pbl0"></div>
+            <div class="pb-line done" id="pbl0"></div>
             <div class="pb-node active" style="--c:var(--c1)" id="pbn1"><div class="pb-dot">1</div><div class="pb-name">Brief解读</div></div>
             <div class="pb-line" id="pbl1"></div>
             <div class="pb-node" style="--c:var(--c2)" id="pbn2"><div class="pb-dot">2</div><div class="pb-name">框架生成</div></div>
@@ -408,42 +512,42 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
           <div class="mods-grid">
             <div class="mc" style="--c:var(--c1)" onclick="nav('brief',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">📋</div><div class="mc-num" id="ms1">01</div></div>
+              <div class="mc-hd"><div class="mc-icon">📋</div><div class="mc-num">01</div></div>
               <div class="mc-title">Brief 解读台</div>
               <div class="mc-desc">上传 Brief 自动解析，识别隐性诉求，生成 AI 确认问题清单</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb1">待开始</span><button class="mc-enter" style="color:var(--c1)">进入 →</button></div>
             </div>
             <div class="mc" style="--c:var(--c2)" onclick="nav('framework',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">🏗️</div><div class="mc-num" id="ms2">02</div></div>
+              <div class="mc-hd"><div class="mc-icon">🏗️</div><div class="mc-num">02</div></div>
               <div class="mc-title">框架生成台</div>
               <div class="mc-desc">选择方案类型，AI 自动搭建对应骨架并推荐匹配金块</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb2">待开始</span><button class="mc-enter" style="color:var(--c2)">进入 →</button></div>
             </div>
             <div class="mc" style="--c:var(--c3)" onclick="nav('insights',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">🔍</div><div class="mc-num" id="ms3">03</div></div>
+              <div class="mc-hd"><div class="mc-icon">🔍</div><div class="mc-num">03</div></div>
               <div class="mc-title">洞察引擎</div>
               <div class="mc-desc">自然语言输入需求，自动调用千瓜/飞瓜/汽车之家等 API 出洞察</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb3">待开始</span><button class="mc-enter" style="color:var(--c3)">进入 →</button></div>
             </div>
             <div class="mc" style="--c:var(--c4)" onclick="nav('strategy',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">⚙️</div><div class="mc-num" id="ms4">04</div></div>
+              <div class="mc-hd"><div class="mc-icon">⚙️</div><div class="mc-num">04</div></div>
               <div class="mc-title">策略工作台</div>
               <div class="mc-desc">AI 生成 3 条策略方向，金块库拖拽辅助，一键自检方案逻辑</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb4">待开始</span><button class="mc-enter" style="color:var(--c4)">进入 →</button></div>
             </div>
             <div class="mc" style="--c:var(--c5)" onclick="nav('creative',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">💡</div><div class="mc-num" id="ms5">05</div></div>
+              <div class="mc-hd"><div class="mc-icon">💡</div><div class="mc-num">05</div></div>
               <div class="mc-title">执行创意台</div>
               <div class="mc-desc">自动生成执行 Roadmap、预算分配及三条差异化创意方向</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb5">待开始</span><button class="mc-enter" style="color:var(--c5)">进入 →</button></div>
             </div>
             <div class="mc" style="--c:var(--c6)" onclick="nav('output',null)">
               <div class="mc-accent"></div>
-              <div class="mc-hd"><div class="mc-icon">🚀</div><div class="mc-num" id="ms6">06</div></div>
+              <div class="mc-hd"><div class="mc-icon">🚀</div><div class="mc-num">06</div></div>
               <div class="mc-title">输出闭环</div>
               <div class="mc-desc">一键同步飞书文档、生成 PPT 大纲、输出汇报话术</div>
               <div class="mc-footer"><span class="badge b-todo" id="mb6">待开始</span><button class="mc-enter" style="color:var(--c6)">进入 →</button></div>
@@ -453,12 +557,12 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
         <div class="vs">
           <div class="vs-label">数据基座</div>
           <div class="found-panel">
-            <div class="fp-title">📚 知识库已就绪 — 30份竞标方案已提取，206金块待向量化</div>
+            <div class="fp-title">📚 知识库已就绪</div>
             <div class="fp-stats">
-              <div class="fp-stat"><div class="fp-num">30</div><div class="fp-label">方案文档<br>Social/PR/Media/KOL</div></div>
-              <div class="fp-stat"><div class="fp-num">206</div><div class="fp-label">策略金块<br>已分类索引</div></div>
-              <div class="fp-stat"><div class="fp-num">6</div><div class="fp-label">外部数据API<br>千瓜/飞瓜/新榜等</div></div>
-              <div class="fp-stat"><div class="fp-num">12+</div><div class="fp-label">Skill 工具<br>pptx/lark/策略框架</div></div>
+              <div class="fp-stat"><div class="fp-num" data-target="30">0</div><div class="fp-label">方案文档<br>Social/PR/Media/KOL</div></div>
+              <div class="fp-stat"><div class="fp-num" data-target="206">0</div><div class="fp-label">策略金块<br>已分类索引</div></div>
+              <div class="fp-stat"><div class="fp-num" data-target="6">0</div><div class="fp-label">外部数据API<br>千瓜/飞瓜/新榜等</div></div>
+              <div class="fp-stat"><div class="fp-num" data-target="12">0</div><div class="fp-label">Skill 工具<br>pptx/lark/策略框架</div></div>
             </div>
           </div>
         </div>
@@ -482,47 +586,26 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
               <div class="up-txt">拖拽文件或点击上传</div>
               <div class="up-hint">支持 PDF · PPT · Word · 飞书链接</div>
             </div>
-            <div style="text-align:center;color:var(--t4);font-size:12px;margin:10px 0">— 或粘贴 Brief 文本 —</div>
+            <div style="text-align:center;color:var(--t4);font-size:12px;margin:12px 0">— 或粘贴 Brief 文本 —</div>
             <textarea class="tfield" id="briefText" placeholder="在此粘贴 Brief 文本内容..."></textarea>
-            <div style="margin-top:12px;display:flex;gap:8px">
-              <button class="btn btn-primary btn-lg" style="--bc:var(--c1);flex:1" onclick="parseBrief()" id="parseBtn">🤖 开始解析 Brief</button>
+            <div style="margin-top:14px;display:flex;gap:8px">
+              <button class="btn btn-primary btn-lg" style="--bc:var(--c1);flex:1" onclick="parseBrief()" id="parseBtn">🤖 开始解析 Brief <span class="kbd">⌘↵</span></button>
             </div>
             <div class="parse-steps" id="parseSteps" style="display:none">
-              <div class="ps-item" id="ps1"><div class="ps-dot">1</div>文档解析 · 提取纯文本</div>
-              <div class="ps-item" id="ps2"><div class="ps-dot">2</div>方案类型识别 · Social 置信度 91%</div>
-              <div class="ps-item" id="ps3"><div class="ps-dot">3</div>结构化提炼 · 6维度输出</div>
-              <div class="ps-item" id="ps4"><div class="ps-dot">4</div>隐性诉求挖掘 · 对照历史中标经验</div>
-              <div class="ps-item" id="ps5"><div class="ps-dot">5</div>QA 追问清单生成</div>
+              <div class="ps-item" id="ps1"><div class="ps-dot">1</div><span>文档解析 · 提取纯文本</span></div>
+              <div class="ps-item" id="ps2"><div class="ps-dot">2</div><span>方案类型识别 · 分类判断中</span></div>
+              <div class="ps-item" id="ps3"><div class="ps-dot">3</div><span>结构化提炼 · 6维度输出</span></div>
+              <div class="ps-item" id="ps4"><div class="ps-dot">4</div><span>隐性诉求挖掘 · 对照历史中标经验</span></div>
+              <div class="ps-item" id="ps5"><div class="ps-dot">5</div><span>QA 追问清单生成</span></div>
             </div>
           </div>
           <div>
             <div class="vs-label">解析结果</div>
-            <div id="briefResult" class="brief-result">
-              <div class="br-field"><div class="br-fl">品牌 & 车型</div><div class="br-fv">东风奕派 M8（中大型豪华轿车）× 赵丽颖 全球代言人</div></div>
-              <div class="br-field"><div class="br-fl">核心目标</div><div class="br-fv">品牌认知提升 15%；吸引 25–38岁高净值女性用户；Q3 大定 3000 台</div></div>
-              <div class="br-field"><div class="br-fl">目标受众</div><div class="br-fv">主力：25–38岁，一二线城市，月收入 2万+，注重品质的独立女性</div></div>
-              <div class="br-field"><div class="br-fl">预算 & 周期</div><div class="br-fv">传播执行费 800万元 · 2026年 6月—8月</div></div>
-              <div class="br-field"><div class="br-fl">方案类型</div><div class="br-fv"><span class="badge b-doing">Social 传播</span> <span class="badge" style="background:#FAF5FF;color:var(--c2)">含 KOL 矩阵</span> · 置信度 91%</div></div>
-              <div class="br-field warn"><div class="br-fl">⚠ 隐性诉求（AI识别）</div><div class="br-fv">客户真正在意的是「赵丽颖粉丝圈层能否真实带动女性大定」，而非仅仅品牌曝光；需关注转化路径设计，不只是声量堆叠。</div></div>
-              <div class="br-field risk"><div class="br-fl">🔴 潜在风险</div><div class="br-fv">竞品问界M9已有成熟女性人群策略且投放成本数据领先，差异化核心主张需在方案中明确体现。</div></div>
-              <div class="qa-box">
-                <div class="qa-title">💬 AI 生成确认问题（建议发送客户）</div>
-                <div class="qa-list">
-                  <div class="qa-item"><span class="qa-n">Q1</span>赵丽颖代言合同中是否有内容共创条款？是否可使用明星原创素材用于 UGC 二次传播？</div>
-                  <div class="qa-item"><span class="qa-n">Q2</span>800万预算是否包含明星代言费，还是纯媒体执行费？KOL 合作费用是否单独预算？</div>
-                  <div class="qa-item"><span class="qa-n">Q3</span>M8 上市节奏是全国同步还是分城市首发？影响媒体投放的分阶段规划。</div>
-                  <div class="qa-item"><span class="qa-n">Q4</span>是否有线下活动（试驾/发布会/快闪）配合？决定 O2O 传播路径是否需要纳入。</div>
-                  <div class="qa-item"><span class="qa-n">Q5</span>客户是否指定主要竞品对标对象？（问界M9/岚图FREE/AITO 均在女性人群有强势传播）</div>
-                </div>
-              </div>
-              <div class="next-bar">
-                <div class="next-info">Brief 解析完成，<strong>方案类型：Social 传播</strong>，已准备好进入框架生成</div>
-                <button class="btn btn-primary" style="--bc:var(--c1)" onclick="markDone(1);nav('framework',null)">进入框架生成台 →</button>
-              </div>
-            </div>
-            <div id="briefPlaceholder" style="color:var(--t4);font-size:13px;padding:40px 20px;text-align:center;background:var(--card);border-radius:13px;border:1.5px dashed var(--border)">
-              <div style="font-size:32px;margin-bottom:10px">📋</div>
-              解析结果将显示在这里
+            <div id="briefResult" class="brief-result"></div>
+            <div id="briefPlaceholder" style="color:var(--t4);font-size:13px;padding:48px 24px;text-align:center;background:var(--card);border-radius:var(--radius);border:1.5px dashed var(--border)">
+              <div style="font-size:36px;margin-bottom:12px">📋</div>
+              <div>解析结果将显示在这里</div>
+              <div style="font-size:11px;margin-top:6px;color:var(--t4)">AI 将逐字输出分析结果</div>
             </div>
           </div>
         </div>
@@ -542,16 +625,16 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
         <div class="type-sel">
           <div class="tb" style="--tc:var(--c1);--tbb:var(--c1b)" onclick="selectType('social',this)"><div class="ti">📱</div><div class="tn">Social</div><div class="ts">六段论</div></div>
           <div class="tb" style="--tc:#0891B2;--tbb:#ECFEFF" onclick="selectType('pr',this)"><div class="ti">📣</div><div class="tn">PR</div><div class="ts">十步链</div></div>
-          <div class="tb" style="--tc:#7C3AED;--tbb:#FAF5FF" onclick="selectType('media',this)"><div class="ti">📊</div><div class="tn">Media</div><div class="ts">五段式</div></div>
-          <div class="tb" style="--tc:#EA580C;--tbb:#FFF7ED" onclick="selectType('kol',this)"><div class="ti">⭐</div><div class="tn">KOL</div><div class="ts">六步链</div></div>
+          <div class="tb" style="--tc:var(--c2);--tbb:var(--c2b)" onclick="selectType('media',this)"><div class="ti">📊</div><div class="tn">Media</div><div class="ts">五段式</div></div>
+          <div class="tb" style="--tc:var(--c4);--tbb:var(--c4b)" onclick="selectType('kol',this)"><div class="ti">⭐</div><div class="tn">KOL</div><div class="ts">六步链</div></div>
         </div>
         <div id="fwContent" style="display:none">
           <div class="fw-layout">
             <div>
               <div class="vs-label" id="fwLabel">Social 六段论骨架</div>
               <div class="fw-skel" id="fwSkel"></div>
-              <div class="next-bar" style="margin-top:16px">
-                <div class="next-info">框架已生成，可根据项目调整各章节权重</div>
+              <div class="next-bar" style="margin-top:18px">
+                <div class="next-info">框架已生成，可根据项目需求调整各章节</div>
                 <button class="btn btn-primary" style="--bc:var(--c2)" onclick="markDone(2);nav('insights',null)">进入洞察引擎 →</button>
               </div>
             </div>
@@ -564,8 +647,8 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
             </div>
           </div>
         </div>
-        <div id="fwPlaceholder" style="color:var(--t4);font-size:13px;padding:48px 20px;text-align:center;background:var(--card);border-radius:13px;border:1.5px dashed var(--border)">
-          <div style="font-size:32px;margin-bottom:10px">🏗️</div>
+        <div id="fwPlaceholder" style="color:var(--t4);font-size:13px;padding:52px 24px;text-align:center;background:var(--card);border-radius:var(--radius);border:1.5px dashed var(--border)">
+          <div style="font-size:36px;margin-bottom:12px">🏗️</div>
           请先选择上方方案类型，框架骨架将自动生成
         </div>
       </div>
@@ -585,6 +668,14 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
           <input class="ifield" id="insightQuery" placeholder="例：小红书赵丽颖相关内容分析，目标人群25-38岁女性" value="分析赵丽颖代言对奕派M8女性目标人群的触达效率，并对比竞品问界M9的达人投放数据">
           <button class="btn btn-primary btn-lg" style="--bc:var(--c3)" onclick="runInsights()" id="insightBtn">🔍 开始分析</button>
         </div>
+        <div id="aiThinking" style="display:none">
+          <div class="ai-thinking">
+            <div class="ait-step" id="ait0"><div class="ait-dot"></div>解析意图：识别「赵丽颖代言效率」+「女性人群」+「竞品对比」三个分析维度</div>
+            <div class="ait-step" id="ait1"><div class="ait-dot"></div>路由决策：需要千瓜（小红书KOL）+ 飞瓜（抖音投放）+ 汽车之家（口碑）+ 巨量算数（趋势）</div>
+            <div class="ait-step" id="ait2"><div class="ait-dot"></div>并行调用 4 个数据 API，预计耗时 8-12 秒</div>
+            <div class="ait-step" id="ait3"><div class="ait-dot"></div>数据回收完成，开始交叉分析与洞察提炼</div>
+          </div>
+        </div>
         <div class="vs-label">数据源调用状态</div>
         <div class="ds-grid">
           <div class="ds-card" id="ds0"><div class="ds-icon">🌸</div><div class="ds-name">千瓜数据</div><div class="ds-status" id="dss0">小红书KOL</div></div>
@@ -599,29 +690,45 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
             <div class="ic" id="ic0">
               <div class="ic-src"><div class="ic-sdot" style="background:#F43F5E"></div><div class="ic-sname">千瓜数据 · 小红书</div></div>
               <div class="ic-hl">赵丽颖相关内容触达效率显著高于行业均值</div>
-              <div class="ic-data">近3月相关笔记 <strong>1,247条</strong>，互动总量 <strong>892万</strong>，其中25–35岁女性占比 <strong>TGI 182</strong>（行业基准100）。<br>赵丽颖官号单条发布平均获赞 <strong>15.6万</strong>，评论区购车意向关键词密度达 <strong>4.2%</strong>。</div>
-              <div class="ic-act">→ 加入策略工作台</div>
+              <div class="ic-data">近3月相关笔记 <strong>1,247条</strong>，互动总量 <strong>892万</strong>，其中25–35岁女性占比 <strong>TGI 182</strong>（行业基准100）。<br>赵丽颖官号单条平均获赞 <strong>15.6万</strong>，评论区购车意向关键词密度 <strong>4.2%</strong>。</div>
+              <div class="ic-chart">
+                <svg class="ring-chart" viewBox="0 0 88 88"><circle class="ring-bg" cx="44" cy="44" r="40"/><circle class="ring-fg" cx="44" cy="44" r="40" style="--offset:69;--rc:#F43F5E"/></svg>
+                <div class="chart-legend"><strong>TGI 182</strong><span>女性触达指数</span><span>行业基准 100</span></div>
+              </div>
+              <div class="ic-act" onclick="toast('success','洞察已加入策略工作台')">→ 加入策略工作台</div>
             </div>
             <div class="ic" id="ic1">
               <div class="ic-src"><div class="ic-sdot" style="background:#8B5CF6"></div><div class="ic-sname">飞瓜数据 · 抖音</div></div>
-              <div class="ic-hl">竞品问界M9女性向投放费用3,754万，奕派M8存在追赶空间</div>
-              <div class="ic-data">问界M9抖音近90天投放预估费用 <strong>3,754.3万</strong>，合作达人 <strong>892个</strong>，女性人群投放占比 <strong>61%</strong>。<br>奕派M8当前抖音声量指数 <strong>32</strong>（问界M9为 <strong>89</strong>），差距明显但也代表增量空间。</div>
-              <div class="ic-act">→ 加入策略工作台</div>
+              <div class="ic-hl">竞品问界M9女性向投放3,754万，奕派M8存在追赶空间</div>
+              <div class="ic-data">问界M9抖音近90天投放预估 <strong>3,754.3万</strong>，合作达人 <strong>892个</strong>，女性人群投放占比 <strong>61%</strong>。<br>奕派M8当前声量指数 <strong>32</strong>（问界M9为 <strong>89</strong>），差距明显但代表增量空间。</div>
+              <div class="ic-chart">
+                <svg class="ring-chart" viewBox="0 0 88 88"><circle class="ring-bg" cx="44" cy="44" r="40"/><circle class="ring-fg" cx="44" cy="44" r="40" style="--offset:161;--rc:#8B5CF6"/></svg>
+                <div class="chart-legend"><strong>36%</strong><span>当前声量占比</span><span>vs 问界M9</span></div>
+              </div>
+              <div class="ic-act" onclick="toast('success','洞察已加入策略工作台')">→ 加入策略工作台</div>
             </div>
             <div class="ic" id="ic2">
-              <div class="ic-src"><div class="ic-sdot" style="background:#059669"></div><div class="ic-sname">汽车之家 · 口碑数据</div></div>
+              <div class="ic-src"><div class="ic-sdot" style="background:#10B981"></div><div class="ic-sname">汽车之家 · 口碑数据</div></div>
               <div class="ic-hl">M8 女性关注人群占比 47.2%，远超行业均值</div>
-              <div class="ic-data">奕派M8近90天关注人群女性占比 <strong>47.2%</strong>（行业均值 <strong>31.6%</strong>），说明产品本身已有女性吸引力基础。<br>高频关注词：外观设计、内饰质感、智能座舱、出行安全感，与赵丽颖人设高度契合。</div>
-              <div class="ic-act">→ 加入策略工作台</div>
+              <div class="ic-data">奕派M8近90天关注人群女性占比 <strong>47.2%</strong>（行业均值 <strong>31.6%</strong>），产品本身已有女性吸引力基础。<br>高频关注词：外观设计、内饰质感、智能座舱、出行安全感。</div>
+              <div class="ic-chart">
+                <svg class="ring-chart" viewBox="0 0 88 88"><circle class="ring-bg" cx="44" cy="44" r="40"/><circle class="ring-fg" cx="44" cy="44" r="40" style="--offset:133;--rc:#10B981"/></svg>
+                <div class="chart-legend"><strong>47.2%</strong><span>女性关注占比</span><span>行业均值 31.6%</span></div>
+              </div>
+              <div class="ic-act" onclick="toast('success','洞察已加入策略工作台')">→ 加入策略工作台</div>
             </div>
             <div class="ic" id="ic3">
               <div class="ic-src"><div class="ic-sdot" style="background:#0891B2"></div><div class="ic-sname">巨量算数 · 抖音官方</div></div>
               <div class="ic-hl">「不将就」情绪词在女性汽车内容中热度上升 230%</div>
-              <div class="ic-data">过去6个月，抖音女性汽车相关内容中「不将就」「自驾」「独立」关键词搜索量上升 <strong>230%</strong>。<br>25–38岁女性用户单次视频广告平均注意时长 <strong>8.3秒</strong>（男性 <strong>5.7秒</strong>），适合情感化长视频内容策略。</div>
-              <div class="ic-act">→ 加入策略工作台</div>
+              <div class="ic-data">过去6月，抖音女性汽车内容中「不将就」「自驾」「独立」搜索量上升 <strong>230%</strong>。<br>25–38岁女性广告平均注意时长 <strong>8.3秒</strong>（男性 <strong>5.7秒</strong>），适合情感化长视频内容。</div>
+              <div class="ic-chart">
+                <svg class="ring-chart" viewBox="0 0 88 88"><circle class="ring-bg" cx="44" cy="44" r="40"/><circle class="ring-fg" cx="44" cy="44" r="40" style="--offset:20;--rc:#0891B2"/></svg>
+                <div class="chart-legend"><strong>+230%</strong><span>情绪词热度</span><span>近6月增幅</span></div>
+              </div>
+              <div class="ic-act" onclick="toast('success','洞察已加入策略工作台')">→ 加入策略工作台</div>
             </div>
           </div>
-          <div class="next-bar" style="margin-top:16px">
+          <div class="next-bar" style="margin-top:18px">
             <div class="next-info">已获取 <strong>4条核心洞察</strong>，数据来源：千瓜/飞瓜/汽车之家/巨量算数</div>
             <button class="btn btn-primary" style="--bc:var(--c3)" onclick="markDone(3);nav('strategy',null)">保存洞察，进入策略工作台 →</button>
           </div>
@@ -639,14 +746,13 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
       </div>
       <div class="vb">
         <div class="st-layout">
-          <!-- Nugget Library -->
           <div>
             <div class="vs-label">金块库（206条）</div>
             <div class="lib">
-              <div class="lib-search"><input class="ifield" placeholder="🔍 搜索金块..." style="font-size:12px" oninput="filterLib(this.value)"></div>
+              <div class="lib-search"><input class="ifield" placeholder="🔍 搜索金块..." style="font-size:11px" oninput="filterLib(this.value)"></div>
               <div class="lib-cats">
                 <button class="lc-btn act" onclick="filterCat('all',this)">全部</button>
-                <button class="lc-btn" onclick="filterCat('策略',this)">策略框架 68</button>
+                <button class="lc-btn" onclick="filterCat('策略',this)">策略 68</button>
                 <button class="lc-btn" onclick="filterCat('洞察',this)">洞察 50</button>
                 <button class="lc-btn" onclick="filterCat('数据',this)">数据 61</button>
                 <button class="lc-btn" onclick="filterCat('创意',this)">创意 25</button>
@@ -654,7 +760,6 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
               <div class="lib-items" id="libItems"></div>
             </div>
           </div>
-          <!-- Strategy Canvas -->
           <div>
             <div class="vs-label">策略画布</div>
             <div class="st-canvas">
@@ -665,22 +770,22 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
               <div class="dir-cards" id="dirCards">
                 <div class="dc" onclick="selectDir(1,this)">
                   <div class="dc-title">「实力，从不将就」</div>
-                  <div class="dc-desc">以品质生活主张为核，赵丽颖「不将就」人设与M8豪华属性深度绑定，激活女性自我表达欲望</div>
+                  <div class="dc-desc">品质生活主张为核，赵丽颖「不将就」人设与M8豪华属性深度绑定</div>
                   <div class="dc-tag">主推方向</div>
                 </div>
                 <div class="dc" onclick="selectDir(2,this)">
                   <div class="dc-title">「她力量，驾驭自我」</div>
-                  <div class="dc-desc">聚焦独立女性叙事，以「驾驭」为核心动词，构建从日常出行到人生掌控权的情感升华路径</div>
+                  <div class="dc-desc">聚焦独立女性叙事，以「驾驭」为动词构建情感升华路径</div>
                   <div class="dc-tag">差异化方向</div>
                 </div>
                 <div class="dc" onclick="selectDir(3,this)">
                   <div class="dc-title">「赵丽颖同款生活方式」</div>
-                  <div class="dc-desc">明星带货逻辑为主，快速转化粉丝购买力，KOL 矩阵铺量，重 ROI 轻品牌深度</div>
+                  <div class="dc-desc">明星带货逻辑为主，快速转化粉丝购买力，重 ROI</div>
                   <div class="dc-tag">速效方向</div>
                 </div>
               </div>
               <div class="st-editor" id="stEditor">
-                <div style="color:var(--t4);font-size:12px;text-align:center;padding:24px 0">点击「生成策略方向」，选择一条策略主线后开始填充</div>
+                <div style="color:var(--t4);font-size:12px;text-align:center;padding:28px 0">点击「生成策略方向」，选择一条策略主线后开始填充</div>
               </div>
             </div>
             <div id="strategyNext" style="display:none">
@@ -704,7 +809,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
       </div>
       <div class="vb">
         <div class="camp-info">
-          <div class="ci-left">
+          <div>
             <div class="ci-title">「实力，从不将就」· 奕派M8 × 赵丽颖</div>
             <div class="ci-tags">
               <span class="ci-tag">Social 传播</span>
@@ -720,21 +825,21 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
           <div class="vs">
             <div class="vs-label">执行时间线</div>
             <div class="tl-chart">
-              <div class="tl-title">三阶段执行 Roadmap</div>
+              <div class="tl-title">三阶段执行 Roadmap · 2026年6月-8月</div>
               <div class="tl-row">
                 <div class="tl-label">6月</div>
-                <div class="tl-wrap"><div class="tl-bar" id="tlb0" style="background:var(--c1);width:0">蓄势期 · 明星内容预热</div></div>
-                <div class="tl-sublabel" style="font-size:10px;color:var(--t4)">赵丽颖内容种草 + KOL矩阵铺量</div>
+                <div class="tl-wrap"><div class="tl-bar" id="tlb0" style="background:linear-gradient(90deg,var(--c1),#60A5FA);width:0">蓄势期 · 明星内容预热</div></div>
+                <div class="tl-sublabel">KOL矩阵铺量</div>
               </div>
               <div class="tl-row">
                 <div class="tl-label">7月</div>
-                <div class="tl-wrap"><div class="tl-bar" id="tlb1" style="background:var(--c5);width:0">爆发期 · 战役事件引爆</div></div>
-                <div class="tl-sublabel" style="font-size:10px;color:var(--t4)">「不将就」UGC战役 + 话题破圈</div>
+                <div class="tl-wrap"><div class="tl-bar" id="tlb1" style="background:linear-gradient(90deg,var(--c5),#22D3EE);width:0">爆发期 · 战役事件引爆</div></div>
+                <div class="tl-sublabel">UGC战役+话题破圈</div>
               </div>
               <div class="tl-row">
                 <div class="tl-label">8月</div>
-                <div class="tl-wrap"><div class="tl-bar" id="tlb2" style="background:var(--c4);width:0">收割期 · 精准转化收割</div></div>
-                <div class="tl-sublabel" style="font-size:10px;color:var(--t4)">搜索广告拦截 + 垂类深度种草</div>
+                <div class="tl-wrap"><div class="tl-bar" id="tlb2" style="background:linear-gradient(90deg,var(--c4),#FBBF24);width:0">收割期 · 精准转化收割</div></div>
+                <div class="tl-sublabel">搜索拦截+深度种草</div>
               </div>
             </div>
           </div>
@@ -744,19 +849,19 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
               <div class="cc" id="cc0">
                 <div class="cc-icon">✊</div>
                 <div class="cc-title">「将就体」UGC 内容战役</div>
-                <div class="cc-desc">发起「我曾经将就过，但现在不了」话题，引导女性用户晒出自己「不将就」的转变瞬间，M8 作为品质升级的具象符号植入</div>
+                <div class="cc-desc">发起「我曾经将就过，但现在不了」话题，引导女性用户晒出「不将就」的转变瞬间，M8 作为品质升级符号植入</div>
                 <button class="cc-sel-btn" onclick="selConcept(0)">✓ 选择此方向</button>
               </div>
               <div class="cc" id="cc1">
                 <div class="cc-icon">🌟</div>
                 <div class="cc-title">赵丽颖「不将就」特辑系列</div>
-                <div class="cc-desc">以赵丽颖真实生活场景为主线，拍摄自驾、工作、出行系列短片，KOL 进行「同款出行」二创，放大真实感与代入感</div>
+                <div class="cc-desc">以赵丽颖真实生活场景为主线，拍摄自驾、工作、出行系列短片，KOL「同款出行」二创放大真实代入感</div>
                 <button class="cc-sel-btn" onclick="selConcept(1)">✓ 选择此方向</button>
               </div>
               <div class="cc" id="cc2">
                 <div class="cc-icon">🏙️</div>
                 <div class="cc-title">城市女性驾驭故事 × 达人深度种草</div>
-                <div class="cc-desc">签约 10–15 位城市女性生活方式 KOL，以「独立女性的出行选择」为主题进行深度内容共创，强调驾驭感与品质生活一致性</div>
+                <div class="cc-desc">签约 10–15 位城市女性生活方式 KOL，以「独立女性的出行选择」为主题深度内容共创</div>
                 <button class="cc-sel-btn" onclick="selConcept(2)">✓ 选择此方向</button>
               </div>
             </div>
@@ -781,48 +886,45 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
       </div>
       <div class="vb">
         <div class="out-layout">
-          <!-- Preview -->
           <div>
             <div class="vs-label">方案内容预览</div>
             <div class="out-preview">
-              <div class="op-hd"><div class="op-hd-title">📄 奕派M8 × 赵丽颖 传播方案 · 摘要</div><span class="badge" style="background:#132334;color:#7DD3FC">草稿</span></div>
+              <div class="op-hd"><div class="op-hd-title">📄 奕派M8 × 赵丽颖 传播方案 · 摘要</div><span class="badge" style="background:rgba(255,255,255,.1);color:#94A3B8">草稿</span></div>
               <div class="op-bd">
                 <div class="op-row"><div class="op-key">项目</div><div class="op-val">东风奕派 M8 × 赵丽颖 代言人 Social 传播方案</div></div>
                 <div class="op-row"><div class="op-key">策略主线</div><div class="op-val">「实力，从不将就」—— 品质生活主张与明星人设深度绑定</div></div>
-                <div class="op-row"><div class="op-key">核心洞察</div><div class="op-val">赵丽颖内容在25–38岁女性 TGI 达182；「不将就」情绪词热度上升230%；M8女性关注占比47.2%已高于行业均值</div></div>
+                <div class="op-row"><div class="op-key">核心洞察</div><div class="op-val">赵丽颖内容在25–38岁女性中 TGI 达182；「不将就」情绪词热度+230%；M8女性关注占比47.2%</div></div>
                 <div class="op-row"><div class="op-key">传播框架</div><div class="op-val">Social 六段论：行业观察→竞品对标→品牌诊断→核心策略→内容战役→运营保障</div></div>
-                <div class="op-row"><div class="op-key">执行节奏</div><div class="op-val">6月蓄势（明星内容预热）→ 7月引爆（UGC战役+话题）→ 8月收割（精准转化）</div></div>
-                <div class="op-row"><div class="op-key">创意方向</div><div class="op-val">「将就体」UGC 战役 + 赵丽颖「不将就」特辑系列</div></div>
-                <div class="op-row"><div class="op-key">预算总额</div><div class="op-val">传播执行费 800万元（KOL合作/内容制作/投放费用）</div></div>
-                <div class="op-row"><div class="op-key">目标 KPI</div><div class="op-val">品牌认知提升≥15%；小红书种草内容≥2000篇；Q3大定≥3000台</div></div>
+                <div class="op-row"><div class="op-key">执行节奏</div><div class="op-val">6月蓄势 → 7月引爆 → 8月收割</div></div>
+                <div class="op-row"><div class="op-key">预算</div><div class="op-val">800万元（KOL合作/内容制作/投放费用）</div></div>
+                <div class="op-row"><div class="op-key">目标 KPI</div><div class="op-val">认知+15%；种草≥2000篇；Q3大定≥3000台</div></div>
               </div>
             </div>
-            <div class="out-hist" style="margin-top:12px">
+            <div class="out-hist" style="margin-top:14px">
               <div class="oh-title">操作历史</div>
               <div id="outHist"><div class="oh-item"><div class="oh-time">--:--</div><div class="oh-text">等待导出操作...</div></div></div>
             </div>
           </div>
-          <!-- Actions -->
           <div class="out-actions">
             <div class="ac" style="--ac:var(--c3)">
-              <div class="ac-hd"><div class="ac-icon">📋</div><div><div class="ac-title">同步飞书文档</div><div class="ac-desc">将完整方案内容写入飞书多维表格，支持团队协作编辑</div></div></div>
-              <button class="btn btn-primary" style="--bc:var(--c3);width:100%" onclick="doOutput('lark',this)" id="outBtn0">同步飞书文档</button>
+              <div class="ac-hd"><div class="ac-icon">📋</div><div><div class="ac-title">同步飞书文档</div><div class="ac-desc">调用 lark-doc Skill，写入飞书多维文档</div></div></div>
+              <button class="btn btn-primary" style="--bc:var(--c3);width:100%" onclick="doOutput('lark',this)">同步飞书文档</button>
               <div class="ac-prog" id="prog0"><div class="ac-prog-bar" id="progbar0"></div></div>
-              <div class="ac-result" id="res0"><div style="color:var(--c3);font-weight:600;font-size:12px">✓ 已同步至飞书</div><div class="ac-result-text">文档链接：<span style="color:var(--c3);cursor:pointer">奕派M8_赵丽颖_传播方案_v1.docx</span><br>已共享给：策略组 · 客户经理 · 项目组</div></div>
+              <div class="ac-result" id="res0"><div style="color:var(--c3);font-weight:600;font-size:12px">✓ 已同步至飞书</div><div class="ac-result-text">文档：<span style="color:var(--c3)">奕派M8_赵丽颖_传播方案_v1.docx</span><br>已共享：策略组 · 客户经理 · 项目组</div></div>
             </div>
             <div class="ac" style="--ac:var(--c2)">
-              <div class="ac-hd"><div class="ac-icon">📊</div><div><div class="ac-title">生成 PPT 大纲</div><div class="ac-desc">调用 pptx Skill 生成完整提案框架，30+页结构化 PPT 大纲</div></div></div>
-              <button class="btn btn-primary" style="--bc:var(--c2);width:100%" onclick="doOutput('ppt',this)" id="outBtn1">生成 PPT 大纲</button>
+              <div class="ac-hd"><div class="ac-icon">📊</div><div><div class="ac-title">生成 PPT 大纲</div><div class="ac-desc">调用 pptx Skill，30+ 页结构化大纲</div></div></div>
+              <button class="btn btn-primary" style="--bc:var(--c2);width:100%" onclick="doOutput('ppt',this)">生成 PPT 大纲</button>
               <div class="ac-prog" id="prog1"><div class="ac-prog-bar" id="progbar1"></div></div>
-              <div class="ac-result" id="res1"><div style="color:var(--c2);font-weight:600;font-size:12px">✓ PPT 大纲已生成</div><div class="ac-result-text">共 <strong>34页</strong> · 含封面/目录/策略主体/执行细节/附录<br><span style="color:var(--c2);cursor:pointer">↓ 下载 PPT 大纲（.pptx）</span></div></div>
+              <div class="ac-result" id="res1"><div style="color:var(--c2);font-weight:600;font-size:12px">✓ PPT 大纲已生成</div><div class="ac-result-text">共 <strong>34页</strong> · 封面/目录/策略主体/执行/附录<br><span style="color:var(--c2)">↓ 下载 PPT 大纲（.pptx）</span></div></div>
             </div>
             <div class="ac" style="--ac:var(--c4)">
-              <div class="ac-hd"><div class="ac-icon">🎤</div><div><div class="ac-title">生成汇报话术</div><div class="ac-desc">生成 5–8 分钟结构化汇报逐字稿，含提案开场/核心逻辑/亮点强调</div></div></div>
-              <button class="btn btn-primary" style="--bc:var(--c4);width:100%" onclick="doOutput('speech',this)" id="outBtn2">生成汇报话术</button>
+              <div class="ac-hd"><div class="ac-icon">🎤</div><div><div class="ac-title">生成汇报话术</div><div class="ac-desc">5-8分钟结构化逐字稿</div></div></div>
+              <button class="btn btn-primary" style="--bc:var(--c4);width:100%" onclick="doOutput('speech',this)">生成汇报话术</button>
               <div class="ac-prog" id="prog2"><div class="ac-prog-bar" id="progbar2"></div></div>
-              <div class="ac-result" id="res2"><div style="color:var(--c4);font-weight:600;font-size:12px">✓ 话术已生成</div><div class="ac-result-text">「各位好，今天给大家汇报的是东风奕派M8与赵丽颖合作的 Social 传播方案。我们的核心洞察来自三个数据：第一，赵丽颖内容在25-38岁女性中 TGI 达到182，远超行业基准；第二，"不将就"情绪词在抖音女性内容中热度上升230%；第三，M8 的女性关注比例已达47.2%，这说明产品本身已经具备了吸引女性的天然基础。基于这三个洞察，我们提出"实力，从不将就"的核心策略主张……」</div></div>
+              <div class="ac-result" id="res2"><div style="color:var(--c4);font-weight:600;font-size:12px">✓ 话术已生成</div><div class="ac-result-text" id="speechText"></div></div>
             </div>
-            <button class="btn btn-primary btn-lg" style="--bc:var(--c6);width:100%;justify-content:center;margin-top:4px" onclick="markDone(6)">🎉 方案已完成，标记闭环</button>
+            <button class="btn btn-primary btn-lg" style="--bc:var(--c6);width:100%;justify-content:center;margin-top:6px" onclick="markDone(6);toast('success','🎉 方案全链路已完成！')">🎉 方案已完成，标记闭环</button>
           </div>
         </div>
       </div>
@@ -831,33 +933,135 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);overflow:hidden;h
   </main>
 </div>
 
+<!-- AI CHAT PANEL -->
+<button class="ai-panel-toggle" id="aiToggle" onclick="toggleAI()">✨</button>
+<div class="ai-panel" id="aiPanel">
+  <div class="aip-header">
+    <div class="aip-avatar">🧠</div>
+    <div><div class="aip-title">品牌大脑 AI</div><div class="aip-sub">基于30份中标方案训练</div></div>
+    <div class="aip-status">在线</div>
+  </div>
+  <div class="aip-messages" id="aiMessages">
+    <div class="aip-msg ai">你好，我是品牌大脑 AI 助手。当前项目：奕派M8 × 赵丽颖 传播方案。有什么我可以帮你的？</div>
+  </div>
+  <div class="aip-input">
+    <input type="text" id="aiInput" placeholder="输入指令，如「换个策略方向」..." onkeydown="if(event.key==='Enter')sendAI()">
+    <button onclick="sendAI()">发送</button>
+  </div>
+</div>
+
 <script>
 // ===== STATE =====
-const S = {
-  done: {},
-  frameworkType: null,
-  strategyDir: null,
-  conceptSel: null
-};
+const S = { done:{}, frameworkType:null, strategyDir:null, conceptSel:null };
+
+// ===== TOAST =====
+function toast(type, text) {
+  const c = document.getElementById('toastContainer');
+  const icons = {success:'✓',info:'ℹ',warn:'⚠'};
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.innerHTML = `<span class="toast-icon">${icons[type]||'✓'}</span>${text}`;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 2500);
+}
+
+// ===== TYPEWRITER =====
+function typewrite(el, text, speed=25) {
+  return new Promise(resolve => {
+    el.textContent = '';
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'ai-cursor';
+    el.appendChild(cursor);
+    function tick() {
+      if (i < text.length) {
+        el.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+        setTimeout(tick, speed + Math.random() * 15);
+      } else {
+        cursor.remove();
+        resolve();
+      }
+    }
+    tick();
+  });
+}
 
 // ===== LOGIN =====
+const slogans = ['从 Brief 到 PPT，AI 帮你搞定全链路','30份中标方案的智慧，一键调用','洞察-策略-创意-执行，4步完成竞标'];
+let sloganIdx = 0;
+function rotateSlogans() {
+  const el = document.getElementById('sloganText');
+  if (!el) return;
+  sloganIdx = (sloganIdx + 1) % slogans.length;
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(8px)';
+  setTimeout(() => {
+    el.textContent = slogans[sloganIdx];
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, 300);
+}
+setInterval(rotateSlogans, 3000);
+
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = (80 + Math.random() * 20) + '%';
+    p.style.animationDuration = (6 + Math.random() * 8) + 's';
+    p.style.animationDelay = Math.random() * 5 + 's';
+    p.style.width = (2 + Math.random() * 3) + 'px';
+    p.style.height = p.style.width;
+    p.style.opacity = 0.2 + Math.random() * 0.4;
+    container.appendChild(p);
+  }
+}
+createParticles();
+
 function doLogin() {
   const ls = document.getElementById('loginScreen');
-  ls.style.opacity = '0';
+  ls.classList.add('hiding');
   setTimeout(() => {
     ls.style.display = 'none';
     document.getElementById('appScreen').style.display = 'flex';
-  }, 500);
+    animateNumbers();
+    toast('info','欢迎回来，霍松');
+  }, 600);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') doLogin();
+});
+
+// ===== NUMBER ANIMATION =====
+function animateNumbers() {
+  document.querySelectorAll('.fp-num[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const duration = 1200;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased);
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target + (target === 12 ? '+' : '');
+    }
+    requestAnimationFrame(update);
+  });
 }
 
 // ===== NAVIGATION =====
 function nav(viewId, navEl) {
+  const vMap = {dashboard:'vDashboard',brief:'vBrief',framework:'vFramework',insights:'vInsights',strategy:'vStrategy',creative:'vCreative',output:'vOutput'};
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const vMap = {dashboard:'vDashboard',brief:'vBrief',framework:'vFramework',insights:'vInsights',strategy:'vStrategy',creative:'vCreative',output:'vOutput'};
   const el = document.getElementById(vMap[viewId]);
   if (el) { el.classList.add('active'); document.querySelector('.main').scrollTop = 0; }
-  if (navEl) { navEl.classList.add('active'); }
+  if (navEl) navEl.classList.add('active');
   else { const n = document.querySelector(`[data-view="${viewId}"]`); if(n) n.classList.add('active'); }
 }
 
@@ -870,14 +1074,13 @@ function markDone(n) {
   if (mb) { mb.textContent = '已完成'; mb.className = 'badge b-done'; }
   const bb = document.getElementById('b'+n+'badge');
   if (bb) { bb.textContent = '已完成'; bb.className = 'badge b-done'; }
-  // Update pipeline
   const pbn = document.getElementById('pbn'+n);
   if (pbn) { pbn.classList.remove('active'); pbn.classList.add('done'); pbn.querySelector('.pb-dot').textContent = '✓'; }
-  const pbl = document.getElementById('pbl'+(n-1));
+  const pbl = document.getElementById('pbl'+n);
   if (pbl) pbl.classList.add('done');
-  // Activate next
   const next = document.getElementById('pbn'+(n+1));
   if (next && !S.done[n+1]) next.classList.add('active');
+  toast('success', `模块 0${n} 已完成`);
 }
 
 // ===== MODULE 1: BRIEF =====
@@ -892,103 +1095,126 @@ function fillBrief() {
 
 目标受众：
 主力人群：25-38 岁，一二线城市，月收入 2 万+，注重生活品质的独立女性
-兴趣标签：精致生活、自驾游、职场进阶、时尚潮流
 
 媒体预算：800万元（含达人合作）
 执行周期：2026年6月-8月
 方案类型：Social 传播（含KOL矩阵）`;
+  toast('info','Brief 内容已填入');
 }
 
-function parseBrief() {
+async function parseBrief() {
   const txt = document.getElementById('briefText').value;
   if (!txt.trim()) { fillBrief(); return; }
   const btn = document.getElementById('parseBtn');
-  btn.disabled = true; btn.textContent = '解析中...';
+  btn.disabled = true; btn.textContent = '🤖 解析中...';
   document.getElementById('parseSteps').style.display = 'flex';
   document.getElementById('briefPlaceholder').style.display = 'none';
   document.getElementById('b1badge').textContent = '解析中';
   document.getElementById('b1badge').className = 'badge b-doing';
+
   const steps = ['ps1','ps2','ps3','ps4','ps5'];
-  steps.forEach((id, i) => {
-    setTimeout(() => {
-      if (i > 0) { const prev = document.getElementById(steps[i-1]); prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.ps-dot').textContent = '✓'; }
-      document.getElementById(id).classList.add('active');
-      if (i === steps.length - 1) {
-        setTimeout(() => {
-          document.getElementById(id).classList.remove('active');
-          document.getElementById(id).classList.add('done');
-          document.getElementById(id).querySelector('.ps-dot').textContent = '✓';
-          showBriefResult();
-        }, 900);
-      }
-    }, i * 900);
-  });
+  for (let i = 0; i < steps.length; i++) {
+    await new Promise(r => setTimeout(r, 800));
+    if (i > 0) { const prev = document.getElementById(steps[i-1]); prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.ps-dot').textContent = '✓'; }
+    document.getElementById(steps[i]).classList.add('active');
+  }
+  await new Promise(r => setTimeout(r, 600));
+  const last = document.getElementById(steps[steps.length-1]);
+  last.classList.remove('active'); last.classList.add('done'); last.querySelector('.ps-dot').textContent = '✓';
+
+  await showBriefResult();
 }
 
-function showBriefResult() {
+async function showBriefResult() {
   const r = document.getElementById('briefResult');
   r.style.display = 'flex';
   document.getElementById('b1badge').textContent = '已解析';
   document.getElementById('b1badge').className = 'badge b-done';
   document.getElementById('parseBtn').textContent = '✓ 已解析';
+
+  const fields = [
+    {cls:'',label:'品牌 & 车型',text:'东风奕派 M8（中大型豪华轿车）× 赵丽颖 全球代言人'},
+    {cls:'',label:'核心目标',text:'品牌认知提升 15%；吸引 25–38岁高净值女性用户；Q3 大定 3000 台'},
+    {cls:'',label:'目标受众',text:'主力：25–38岁，一二线城市，月收入 2万+，注重品质的独立女性'},
+    {cls:'',label:'预算 & 周期',text:'传播执行费 800万元 · 2026年 6月—8月'},
+    {cls:'warn',label:'⚠ 隐性诉求（AI识别）',text:'客户真正在意的是「赵丽颖粉丝圈层能否真实带动女性大定」，而非仅仅品牌曝光；需关注转化路径设计。'},
+    {cls:'risk',label:'🔴 潜在风险',text:'竞品问界M9已有成熟女性人群策略且投放数据领先，差异化核心主张需在方案中明确体现。'},
+  ];
+
+  for (const f of fields) {
+    const div = document.createElement('div');
+    div.className = `br-field ${f.cls}`;
+    div.innerHTML = `<div class="br-fl">${f.label}</div><div class="br-fv"></div>`;
+    r.appendChild(div);
+    await typewrite(div.querySelector('.br-fv'), f.text, 18);
+    await new Promise(r => setTimeout(r, 100));
+  }
+
+  const qaHTML = `<div class="qa-box">
+    <div class="qa-title">💬 AI 生成确认问题（建议发送客户）</div>
+    <div class="qa-list">
+      <div class="qa-item"><span class="qa-n">Q1</span>赵丽颖代言合同中是否有内容共创条款？是否可使用明星素材进行 UGC 二次传播？</div>
+      <div class="qa-item"><span class="qa-n">Q2</span>800万预算是否包含明星代言费，还是纯媒体执行费？KOL 费用是否单独预算？</div>
+      <div class="qa-item"><span class="qa-n">Q3</span>M8 上市节奏是全国同步还是分城市首发？影响投放分阶段规划。</div>
+      <div class="qa-item"><span class="qa-n">Q4</span>是否有线下活动配合？决定 O2O 传播路径是否纳入。</div>
+      <div class="qa-item"><span class="qa-n">Q5</span>客户指定竞品对标对象？（问界M9/岚图FREE/AITO 均有强势女性传播）</div>
+    </div>
+  </div>`;
+  const qaDiv = document.createElement('div');
+  qaDiv.innerHTML = qaHTML;
+  qaDiv.style.animation = 'fadeUp .4s ease';
+  r.appendChild(qaDiv.firstElementChild);
+
+  const nextHTML = `<div class="next-bar">
+    <div class="next-info">Brief 解析完成，<strong>方案类型：Social 传播</strong></div>
+    <button class="btn btn-primary" style="--bc:var(--c1)" onclick="markDone(1);nav('framework',null)">进入框架生成台 →</button>
+  </div>`;
+  const nextDiv = document.createElement('div');
+  nextDiv.innerHTML = nextHTML;
+  nextDiv.style.animation = 'fadeUp .4s ease';
+  r.appendChild(nextDiv.firstElementChild);
 }
 
 // ===== MODULE 2: FRAMEWORK =====
 const fwData = {
-  social: {
-    label: 'Social 六段论骨架',
-    steps: [
-      {n:1,title:'行业生态观察',desc:'汽车行业 Social 内容现状扫描，女性用车内容趋势，平台差异化特征分析',tags:['行业报告','平台数据','竞品内容']},
-      {n:2,title:'竞品对标分析',desc:'问界M9/岚图FREE女性向传播策略拆解，达人矩阵结构，内容形式对比',tags:['竞品投放','达人策略','内容分析']},
-      {n:3,title:'品牌/产品诊断',desc:'奕派M8当前认知现状，赵丽颖代言人价值评估，用户心智占位分析',tags:['品牌现状','代言人评估','心智分析']},
-      {n:4,title:'核心策略主张',desc:'「实力，从不将就」策略定调，传播核心主张，人群×场景×内容三角模型',tags:['策略主张','核心概念','传播框架']},
-      {n:5,title:'内容战役规划',desc:'三阶段传播节奏（蓄势→引爆→收割），KOL矩阵分层，UGC战役设计',tags:['内容矩阵','KOL分层','战役节奏']},
-      {n:6,title:'运营保障体系',desc:'舆情监测机制，数据复盘节点，突发危机预案，团队分工与排期',tags:['舆情管理','数据复盘','排期']}
-    ]
-  },
-  pr: {
-    label: 'PR 十步链骨架',
-    steps: [
-      {n:1,title:'行业舆论扫描',desc:'汽车行业媒体报道格局，代言人营销PR案例扫描，舆论场主要参与者识别',tags:['媒体生态','舆论格局','案例库']},
-      {n:2,title:'竞争格局分析',desc:'同期竞品PR策略，媒体资源占位，KOL/KOM合作模式对比',tags:['竞品PR','媒体布局','资源对比']},
-      {n:3,title:'品牌现状诊断',desc:'品牌声誉基础，当前媒体形象，历史传播遗留问题梳理',tags:['声誉基础','媒体形象','风险排查']},
-      {n:4,title:'目标受众洞察',desc:'25-38岁女性媒介消费行为，信任度形成路径，KOM影响链路分析',tags:['受众画像','媒介行为','信任路径']},
-      {n:5,title:'核心策略主张',desc:'PR核心叙事主线，品牌故事结构，媒介投放策略总纲',tags:['PR主线','叙事结构','投放策略']},
-      {n:6,title:'传播策略设计',desc:'媒体组合（头部媒体+垂类媒体+自媒体），发稿节奏，专题策划',tags:['媒体组合','发稿节奏','专题']},
-      {n:7,title:'创意事件策划',desc:'核心传播事件（发布会/明星事件/联名），话题设计，传播引爆点规划',tags:['核心事件','话题策划','引爆点']},
-      {n:8,title:'媒体/达人策略',desc:'媒体资源清单，KOL/KOM矩阵，红人合作形式及价格区间',tags:['媒体资源','达人矩阵','合作形式']},
-      {n:9,title:'舆情危机管理',desc:'风险预案清单（负面话题/明星危机/产品质量），快速响应SOP',tags:['危机预案','舆情响应','SOP']},
-      {n:10,title:'公司实力展示',desc:'案例背书，团队资质，技术能力（Blue AI等），服务保障承诺',tags:['案例背书','团队实力','技术能力']}
-    ]
-  },
-  media: {
-    label: 'Media 五段式骨架',
-    steps: [
-      {n:1,title:'外部环境扫描',desc:'汽车行业媒介投放规模及趋势，主要竞品投放数据（含问界M9 3754万抖音投放），平台竞争格局',tags:['投放数据','竞品分析','市场趋势']},
-      {n:2,title:'目标人群洞察',desc:'25-38岁女性媒介消费行为，平台偏好，TGI标定，内容消费时长分布',tags:['TGI分析','平台偏好','人群画像']},
-      {n:3,title:'媒介策略总纲',desc:'三层架构（品牌认知层/兴趣种草层/转化收割层），预算分配逻辑，渠道角色定义',tags:['三层架构','预算分配','渠道定位']},
-      {n:4,title:'渠道组合+Roadmap',desc:'抖音+小红书+微博+公众号渠道组合方案，各平台投放形式，月度排期规划',tags:['渠道组合','排期规划','投放形式']},
-      {n:5,title:'预算分配+KPI预估',desc:'各渠道预算拆分，CPM/CPC/CPE目标值，ROI预估模型，KPI监控指标体系',tags:['预算拆分','KPI体系','ROI模型']}
-    ]
-  },
-  kol: {
-    label: 'KOL 六步链骨架',
-    steps: [
-      {n:1,title:'困境定调',desc:'当前汽车达人合作困境：同质化严重、头部KOL价格虚高、转化链路不清晰，本方案如何突破',tags:['问题定调','行业困境','差异化']},
-      {n:2,title:'平台/行业洞察',desc:'抖音(注意力效率)vs小红书(心智深度)vs视频号(信任转化)vs B站(圈层穿透)差异化定位',tags:['平台特性','内容生态','达人生态']},
-      {n:3,title:'人群策略',desc:'25-38岁女性兴趣图谱，精准人群包定义，跨平台人群触达路径设计',tags:['人群圈定','兴趣图谱','人群包']},
-      {n:4,title:'竞品达人投放复盘',desc:'问界M9/岚图FREE近3月KOL投放数据拆解：达人层级分布、内容形式、互动率对比',tags:['竞品复盘','投放数据','达人分析']},
-      {n:5,title:'达人矩阵+内容策略',desc:'头部/腰部/尾部三级达人配比（赵丽颖官号+30头部+150腰部+500尾部），各层级内容形式规范',tags:['达人分层','矩阵设计','内容规范']},
-      {n:6,title:'排期/预算/KPI',desc:'3个月投放排期，800万预算达人分配（头60%/腰30%/尾10%），互动率/种草系数/大定转化KPI体系',tags:['排期规划','预算分配','KPI']}
-    ]
-  }
+  social:{label:'Social 六段论骨架',steps:[
+    {n:1,title:'行业生态观察',desc:'汽车行业 Social 内容现状扫描，女性用车内容趋势',tags:['行业报告','平台数据','竞品内容']},
+    {n:2,title:'竞品对标分析',desc:'问界M9/岚图FREE 女性向传播策略拆解',tags:['竞品投放','达人策略','内容分析']},
+    {n:3,title:'品牌/产品诊断',desc:'奕派M8 认知现状，赵丽颖代言人价值评估',tags:['品牌现状','代言人评估','心智分析']},
+    {n:4,title:'核心策略主张',desc:'「实力，从不将就」策略定调，传播核心主张',tags:['策略主张','核心概念','传播框架']},
+    {n:5,title:'内容战役规划',desc:'三阶段节奏（蓄势→引爆→收割），KOL矩阵分层',tags:['内容矩阵','KOL分层','战役节奏']},
+    {n:6,title:'运营保障体系',desc:'舆情监测，数据复盘节点，危机预案',tags:['舆情管理','数据复盘','排期']}
+  ]},
+  pr:{label:'PR 十步链骨架',steps:[
+    {n:1,title:'行业舆论扫描',desc:'汽车行业媒体报道格局，代言人营销PR案例',tags:['媒体生态','案例库']},
+    {n:2,title:'竞争格局分析',desc:'同期竞品PR策略，媒体资源占位',tags:['竞品PR','媒体布局']},
+    {n:3,title:'品牌现状诊断',desc:'品牌声誉基础，当前媒体形象',tags:['声誉基础','媒体形象']},
+    {n:4,title:'目标受众洞察',desc:'25-38岁女性媒介消费，信任路径',tags:['受众画像','媒介行为']},
+    {n:5,title:'核心策略主张',desc:'PR核心叙事主线，品牌故事结构',tags:['PR主线','叙事结构']},
+    {n:6,title:'传播策略设计',desc:'媒体组合方案，发稿节奏规划',tags:['媒体组合','发稿节奏']}
+  ]},
+  media:{label:'Media 五段式骨架',steps:[
+    {n:1,title:'外部环境扫描',desc:'行业媒介投放规模及趋势，竞品投放数据',tags:['投放数据','市场趋势']},
+    {n:2,title:'目标人群洞察',desc:'女性媒介消费行为，平台偏好，TGI',tags:['TGI分析','人群画像']},
+    {n:3,title:'媒介策略总纲',desc:'三层架构：认知层/种草层/转化层',tags:['三层架构','预算分配']},
+    {n:4,title:'渠道组合+Roadmap',desc:'各平台投放形式，月度排期',tags:['渠道组合','排期规划']},
+    {n:5,title:'预算分配+KPI',desc:'各渠道预算拆分，ROI预估',tags:['预算拆分','KPI体系']}
+  ]},
+  kol:{label:'KOL 六步链骨架',steps:[
+    {n:1,title:'困境定调',desc:'当前达人合作困境：同质化、价格虚高',tags:['问题定调','差异化']},
+    {n:2,title:'平台/行业洞察',desc:'抖音/小红书/视频号/B站差异化定位',tags:['平台特性','达人生态']},
+    {n:3,title:'人群策略',desc:'女性兴趣图谱，精准人群包定义',tags:['人群圈定','兴趣图谱']},
+    {n:4,title:'竞品达人复盘',desc:'问界M9/岚图FREE KOL投放数据拆解',tags:['竞品复盘','投放数据']},
+    {n:5,title:'达人矩阵+内容策略',desc:'三级达人配比及内容形式规范',tags:['达人分层','内容规范']},
+    {n:6,title:'排期/预算/KPI',desc:'3个月投放排期，800万预算分配',tags:['排期规划','预算分配']}
+  ]}
 };
 
 const fwNuggets = [
-  {score:'97%',text:'女性用户的汽车购买决策路径：社交种草→线上比价→线下体验→家庭决策，平均周期42天',src:'某品牌Social方案'},
-  {score:'93%',text:'「明星代言+KOL矩阵」组合拳：代言人提供背书，KOL承接种草，二者配合提升25%转化效率',src:'某汽车KOL方案'},
-  {score:'89%',text:'小红书汽车内容：情感共鸣类笔记互动率是产品参数类的3.2倍，女性内容更显著',src:'某品牌Social方案'},
-  {score:'85%',text:'「品质生活方式」切入路径：先建立场景认同，再植入产品，避免直接卖车的抵触情绪',src:'某豪华品牌PR方案'},
+  {score:'97%',text:'女性购车决策路径：社交种草→线上比价→线下体验→家庭决策，周期42天',src:'某品牌Social方案'},
+  {score:'93%',text:'「明星代言+KOL矩阵」组合：代言人背书+KOL种草，转化效率+25%',src:'某汽车KOL方案'},
+  {score:'89%',text:'小红书汽车内容：情感共鸣类互动率是参数类的3.2倍',src:'某品牌Social方案'},
+  {score:'85%',text:'品质生活切入：先建场景认同再植入产品，避免直接卖车抵触',src:'某豪华品牌PR方案'},
 ];
 
 function selectType(type, el) {
@@ -1006,45 +1232,51 @@ function selectType(type, el) {
       <div><div class="fs-title">${s.title}</div><div class="fs-desc">${s.desc}</div>
       <div class="fs-tags">${s.tags.map(t=>`<span class="fs-tag">${t}</span>`).join('')}</div></div>
     </div>`).join('');
-  data.steps.forEach((s,i) => setTimeout(() => document.getElementById('fs'+(i+1)).classList.add('vis'), i * 120));
+  data.steps.forEach((s,i) => setTimeout(() => document.getElementById('fs'+(i+1)).classList.add('vis'), i * 100));
   const np = document.getElementById('fwNuggets');
   np.innerHTML = fwNuggets.map((n,i) => `
-    <div class="nc" id="nc${i}" onclick="addNugget(this,'${n.text}')">
+    <div class="nc" id="nc${i}" onclick="addNugget(this)">
       <span class="nc-score">${n.score}</span>
       <div class="nc-text">${n.text}</div>
       <div class="nc-src">来自：${n.src}</div>
     </div>`).join('');
+  toast('info', `${data.label} 已生成`);
 }
 
-function addNugget(el, text) {
+function addNugget(el) {
+  if (el.classList.contains('added')) return;
   el.classList.add('added');
-  el.querySelector('.nc-text').textContent = '✓ ' + el.querySelector('.nc-text').textContent.replace('✓ ','');
+  toast('success','金块已添加');
 }
 
 // ===== MODULE 3: INSIGHTS =====
-function runInsights() {
+async function runInsights() {
   const btn = document.getElementById('insightBtn');
   btn.disabled = true; btn.textContent = '分析中...';
   document.getElementById('b3badge').textContent = '分析中';
   document.getElementById('b3badge').className = 'badge b-doing';
-  const sources = [0,1,2,3,4];
-  const labels = ['调用API中...','调用API中...','调用API中...','调用API中...','调用API中...'];
-  const doneLabels = ['892万互动 · 完成','问界M9 3754万 · 完成','264篇头部文章 · 完成','女性47.2% · 完成','热词上升230% · 完成'];
-  sources.forEach((i) => {
-    setTimeout(() => {
-      document.getElementById('ds'+i).classList.add('loading');
-      document.getElementById('dss'+i).textContent = labels[i];
-      setTimeout(() => {
-        document.getElementById('ds'+i).classList.remove('loading');
-        document.getElementById('ds'+i).classList.add('done');
-        document.getElementById('dss'+i).textContent = doneLabels[i];
-        if (i === 4) showInsights();
-      }, 1400);
-    }, i * 700);
-  });
-}
 
-function showInsights() {
+  document.getElementById('aiThinking').style.display = 'block';
+  const aitSteps = ['ait0','ait1','ait2','ait3'];
+  for (let i = 0; i < aitSteps.length; i++) {
+    await new Promise(r => setTimeout(r, 600));
+    if (i > 0) document.getElementById(aitSteps[i-1]).classList.replace('active','done');
+    document.getElementById(aitSteps[i]).classList.add('active');
+  }
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById(aitSteps[3]).classList.replace('active','done');
+
+  const sources = [0,1,2,3,4];
+  const doneLabels = ['892万互动 ✓','问界M9 3754万 ✓','264篇头部文章 ✓','女性47.2% ✓','热词+230% ✓'];
+  for (let i = 0; i < sources.length; i++) {
+    document.getElementById('ds'+i).classList.add('loading');
+    document.getElementById('dss'+i).textContent = '调用中...';
+    await new Promise(r => setTimeout(r, 800));
+    document.getElementById('ds'+i).classList.remove('loading');
+    document.getElementById('ds'+i).classList.add('done');
+    document.getElementById('dss'+i).textContent = doneLabels[i];
+  }
+
   document.getElementById('insightResults').style.display = 'block';
   document.getElementById('insightBtn').textContent = '✓ 已分析';
   document.getElementById('b3badge').textContent = '已完成';
@@ -1054,61 +1286,43 @@ function showInsights() {
 
 // ===== MODULE 4: STRATEGY =====
 const libData = [
-  {cat:'策略',text:'「从不将就」是女性消费升级的核心情绪锚点，代表从就业到品质生活的全面自我主张'},
-  {cat:'策略',text:'代言人策略最大风险：明星光芒盖过产品，方案应设计明星→产品的叙事过渡节点'},
-  {cat:'策略',text:'Social六段论核心：行业观察要对准竞争对手的传播弱点，而非行业通识'},
-  {cat:'洞察',text:'25-38岁城市女性：购车决策自主度比男性高20%，但受KOL影响程度也高出35%'},
-  {cat:'洞察',text:'小红书汽车种草笔记：带有真实驾驶体验的内容比广告类内容收藏率高180%'},
-  {cat:'洞察',text:'赵丽颖粉丝画像：25-35岁女性占72%，一二线城市65%，月收入1万+占58%'},
-  {cat:'数据',text:'问界M9女性人群投放：达人892个，月均投放费用4181万，CPM约35元'},
-  {cat:'数据',text:'小红书汽车品类CPE均值：1.2元/互动；KOL腰部账号性价比最高（50-200万粉）'},
-  {cat:'数据',text:'抖音女性汽车内容完播率：情感叙事类41%，产品参数类18%，差距2.3倍'},
-  {cat:'创意',text:'「将就体」话题：发起「我曾经将就过」挑战赛，用普通人故事为品牌主张提供真实感'},
-  {cat:'创意',text:'明星深度内容：赵丽颖真实生活场景（非剧本），工作、出行、自驾系列，强化真实代入感'},
-  {cat:'创意',text:'城市女性自驾故事：签约10-15位生活方式KOL，以「独立出行选择」为主题深度共创'},
+  {cat:'策略',text:'「从不将就」是女性消费升级的核心情绪锚点'},
+  {cat:'策略',text:'代言人策略最大风险：明星光芒盖过产品'},
+  {cat:'策略',text:'Social六段论核心：行业观察要对准竞品传播弱点'},
+  {cat:'洞察',text:'25-38岁女性购车决策自主度比男性高20%'},
+  {cat:'洞察',text:'小红书真实驾驶体验内容收藏率比广告高180%'},
+  {cat:'洞察',text:'赵丽颖粉丝：25-35岁女性72%，一二线65%'},
+  {cat:'数据',text:'问界M9女性投放：达人892个，月均4181万'},
+  {cat:'数据',text:'小红书汽车CPE均值1.2元，腰部账号性价比最高'},
+  {cat:'数据',text:'抖音女性汽车内容完播率：情感41% vs 参数18%'},
+  {cat:'创意',text:'「将就体」话题：用普通人故事为品牌主张提供真实感'},
+  {cat:'创意',text:'明星深度内容：赵丽颖真实场景自驾系列'},
+  {cat:'创意',text:'城市女性自驾故事：10-15位KOL深度共创'},
 ];
 
 function buildLib(filter='all', search='') {
   const items = document.getElementById('libItems');
   const filtered = libData.filter(d => {
-    const catOk = filter === 'all' || d.cat === filter;
-    const searchOk = !search || d.text.includes(search);
-    return catOk && searchOk;
+    return (filter === 'all' || d.cat === filter) && (!search || d.text.includes(search));
   });
   items.innerHTML = filtered.map((d,i) => `
-    <div class="li ${d.added?'added':''}" onclick="addLibItem(this,'${d.text.replace(/'/g,"\\'")}')">
+    <div class="li" onclick="addLibItem(this)">
       <div class="li-text">${d.text}</div>
       <div class="li-cat">${d.cat === '策略' ? '🔵' : d.cat === '洞察' ? '🟡' : d.cat === '数据' ? '🟢' : '🟠'} ${d.cat}金块</div>
     </div>`).join('');
 }
 
 let activeCat = 'all';
-function filterCat(cat, el) {
-  activeCat = cat;
-  document.querySelectorAll('.lc-btn').forEach(b => b.classList.remove('act'));
-  el.classList.add('act');
-  buildLib(cat, document.querySelector('.lib-search input').value);
-}
+function filterCat(cat, el) { activeCat = cat; document.querySelectorAll('.lc-btn').forEach(b => b.classList.remove('act')); el.classList.add('act'); buildLib(cat, ''); }
 function filterLib(val) { buildLib(activeCat, val); }
-
-function addLibItem(el, text) {
-  if (el.classList.contains('added')) return;
-  el.classList.add('added');
-  el.querySelector('.li-text').textContent = '✓ ' + el.querySelector('.li-text').textContent;
-  if (S.strategyDir) {
-    const editor = document.getElementById('stEditor');
-    const nug = document.createElement('span');
-    nug.className = 'added-nug';
-    nug.textContent = '📌 ' + text.substring(0,28) + '...';
-    nug.onclick = () => nug.remove();
-    editor.querySelector('.se-content') && editor.querySelector('.se-content').appendChild(nug);
-  }
-}
+function addLibItem(el) { if(el.classList.contains('added')) return; el.classList.add('added'); toast('success','金块已加入画布'); }
 
 function genDirections() {
   document.getElementById('dirCards').classList.add('vis');
   document.getElementById('genDirBtn').textContent = '已生成 ✓';
   document.getElementById('genDirBtn').disabled = true;
+  document.getElementById('b4badge').textContent = '进行中';
+  document.getElementById('b4badge').className = 'badge b-doing';
 }
 
 function selectDir(n, el) {
@@ -1118,35 +1332,34 @@ function selectDir(n, el) {
   const names = ['「实力，从不将就」','「她力量，驾驭自我」','「赵丽颖同款生活方式」'];
   document.getElementById('selectedDirName').textContent = names[n-1];
   document.getElementById('strategyNext').style.display = 'block';
-  document.getElementById('b4badge').textContent = '进行中';
-  document.getElementById('b4badge').className = 'badge b-doing';
-  const contents = [
-    {core:'以「实力，从不将就」为品牌战役主题，赵丽颖人设（不将就/实力派）与M8豪华属性精准契合。传播叙事：从「普通女性将就的日常」到「遇见M8，拒绝将就」的情感升华。',people:'主力圈层：精致生活/独立职场女性；破圈圈层：赵丽颖粉丝群（25-35岁女性）；延伸圈层：汽车决策影响者（伴侣/闺蜜）。',content:'6月：赵丽颖官号发布「不将就宣言」系列内容（3条）；7月：「将就体」话题挑战赛+KOL矩阵二创；8月：精准投放+搜索拦截，收割大定。'},
-  ];
-  const c = contents[0];
-  document.getElementById('stEditor').innerHTML = `
-    <div class="se-sec"><div class="se-title">核心策略主张</div><div class="se-content">${c.core}</div></div>
-    <div class="se-sec"><div class="se-title">人群策略</div><div class="se-content">${c.people}</div></div>
-    <div class="se-sec"><div class="se-title">内容战役节奏</div><div class="se-content">${c.content}<br><br><em style="color:var(--t4);font-size:11px">👆 点击左侧金块库，将金块拖入此处作为支撑论据</em></div></div>`;
+
+  const editor = document.getElementById('stEditor');
+  editor.innerHTML = `
+    <div class="se-sec"><div class="se-title">核心策略主张</div><div class="se-content" id="stCore"></div></div>
+    <div class="se-sec"><div class="se-title">人群策略</div><div class="se-content" id="stPeople"></div></div>
+    <div class="se-sec"><div class="se-title">内容战役节奏</div><div class="se-content" id="stContent"></div></div>`;
+
+  typewrite(document.getElementById('stCore'), '以「实力，从不将就」为品牌战役主题，赵丽颖人设（不将就/实力派）与M8豪华属性精准契合。从「普通女性将就的日常」到「遇见M8，拒绝将就」的情感升华。', 15);
+  setTimeout(() => typewrite(document.getElementById('stPeople'), '主力圈层：精致生活/独立职场女性；破圈圈层：赵丽颖粉丝群（25-35岁）；延伸圈层：汽车决策影响者（伴侣/闺蜜）。', 15), 1500);
+  setTimeout(() => typewrite(document.getElementById('stContent'), '6月：赵丽颖官号发布「不将就宣言」系列（3条）；7月：「将就体」UGC战役+KOL矩阵二创；8月：精准投放+搜索拦截，收割大定。', 15), 3000);
 }
 
 // ===== MODULE 5: CREATIVE =====
 function genCreative() {
   const btn = document.getElementById('genCreBtn');
-  btn.disabled = true; btn.textContent = '生成中...';
+  btn.disabled = true; btn.textContent = '⚡ 生成中...';
   document.getElementById('b5badge').textContent = '生成中';
   document.getElementById('b5badge').className = 'badge b-doing';
   setTimeout(() => {
     document.getElementById('creativeContent').style.display = 'block';
     btn.textContent = '✓ 已生成';
     document.getElementById('b5badge').textContent = '进行中';
-    document.getElementById('b5badge').className = 'badge b-doing';
     setTimeout(() => {
       document.getElementById('tlb0').style.width = '70%';
       document.getElementById('tlb1').style.width = '95%';
       document.getElementById('tlb2').style.width = '55%';
     }, 200);
-    [0,1,2].forEach(i => setTimeout(() => document.getElementById('cc'+i).classList.add('vis'), 600 + i*200));
+    [0,1,2].forEach(i => setTimeout(() => document.getElementById('cc'+i).classList.add('vis'), 500 + i*200));
   }, 1200);
 }
 
@@ -1157,13 +1370,14 @@ function selConcept(n) {
   document.getElementById('creativeNext').style.display = 'block';
   document.getElementById('b5badge').textContent = '已完成';
   document.getElementById('b5badge').className = 'badge b-done';
+  toast('success','创意方向已选定');
 }
 
 // ===== MODULE 6: OUTPUT =====
 const histItems = [];
 function addHist(txt) {
   const now = new Date();
-  const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
   histItems.unshift({t, txt});
   document.getElementById('outHist').innerHTML = histItems.map(h => `<div class="oh-item"><div class="oh-time">${h.t}</div><div class="oh-text">${h.txt}</div></div>`).join('');
 }
@@ -1175,19 +1389,59 @@ function doOutput(type, btn) {
   const bar = document.getElementById('progbar'+idx);
   prog.style.display = 'block';
   setTimeout(() => { bar.style.width = '100%'; }, 50);
-  const labels = {lark:'正在调用 lark-doc Skill...', ppt:'正在调用 pptx Skill...', speech:'正在生成汇报话术...'};
+  const labels = {lark:'调用 lark-doc Skill...', ppt:'调用 pptx Skill...', speech:'生成汇报话术...'};
   btn.textContent = labels[type];
-  addHist(labels[type]);
+  addHist('⏳ ' + labels[type]);
   setTimeout(() => {
-    prog.style.display = 'none';
-    bar.style.width = '0';
+    prog.style.display = 'none'; bar.style.width = '0';
     const res = document.getElementById('res'+idx);
     res.classList.add('vis');
-    const doneLabels = {lark:'✓ 飞书文档已同步', ppt:'✓ PPT大纲已生成', speech:'✓ 汇报话术已生成'};
-    addHist(doneLabels[type]);
+    const doneLabels = {lark:'飞书文档已同步', ppt:'PPT大纲已生成', speech:'汇报话术已生成'};
+    addHist('✓ ' + doneLabels[type]);
+    toast('success', doneLabels[type]);
     document.getElementById('b6badge').textContent = '输出中';
     document.getElementById('b6badge').className = 'badge b-doing';
-  }, 2000);
+    if (type === 'speech') {
+      const speechEl = document.getElementById('speechText');
+      typewrite(speechEl, '各位好，今天给大家汇报的是东风奕派M8与赵丽颖合作的 Social 传播方案。我们的核心洞察来自三个数据：第一，赵丽颖内容在25-38岁女性中 TGI 达到182，远超行业基准；第二，"不将就"情绪词热度上升230%；第三，M8 的女性关注比例已达47.2%。基于此，我们提出"实力，从不将就"的核心策略……', 20);
+    }
+  }, 2200);
+}
+
+// ===== AI PANEL =====
+let aiOpen = false;
+function toggleAI() {
+  aiOpen = !aiOpen;
+  const panel = document.getElementById('aiPanel');
+  const toggle = document.getElementById('aiToggle');
+  if (aiOpen) { panel.classList.add('open'); toggle.classList.add('open'); toggle.textContent = '✕'; }
+  else { panel.classList.remove('open'); toggle.classList.remove('open'); toggle.textContent = '✨'; }
+}
+
+const aiResponses = {
+  default: '好的，我来帮你处理。基于当前奕派M8项目的上下文，你还需要我做什么具体调整吗？',
+  '换个策略方向': '建议尝试「她力量，驾驭自我」方向。相比当前主推方向，差异化更强：聚焦独立女性叙事，以「驾驭」为核心动词，从日常出行升华到人生掌控权。要我生成详细策略框架吗？',
+  '数据不够': '我可以补充以下数据源：1) 微博热搜中赵丽颖近期话题热度趋势；2) 懂车帝女性用户M8关注数据；3) 小红书同级别车型种草笔记互动率对比。要我现在调用吗？',
+  '方案太长': '建议精简策略：保留核心洞察3条（TGI 182 / +230% / 47.2%），策略主张1条，执行节奏简化为"预热-引爆-收割"三段。PPT控制在25页以内。要我帮你重新生成精简版吗？',
+};
+
+function sendAI() {
+  const input = document.getElementById('aiInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  const msgs = document.getElementById('aiMessages');
+  msgs.innerHTML += `<div class="aip-msg user">${text}</div>`;
+  msgs.innerHTML += `<div class="aip-msg ai"><span class="thinking">思考中</span></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  setTimeout(() => {
+    const response = aiResponses[text] || aiResponses.default;
+    const lastMsg = msgs.querySelector('.aip-msg:last-child');
+    lastMsg.innerHTML = '';
+    typewrite(lastMsg, response, 20);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1200);
 }
 
 // ===== INIT =====
